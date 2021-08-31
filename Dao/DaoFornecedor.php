@@ -70,7 +70,7 @@ class DaoFornecedor {
             try{
                 $stmt = $conecta->prepare("update fornecedor set "
                         . "nomeForncedor = ?,"
-                        . "logradoro = ?,"
+                        . "logradouro = ?,"
                         . "complemento = ?, "
                         . "bairro = ?, "
                         . "cidade = ? ,"
@@ -78,8 +78,8 @@ class DaoFornecedor {
                         . "cep = ? ,"
                         . "representante = ?, "
                         . "email = ? ,"
-                        . "telfixo = ?, "
-                        . "telcell = ? "
+                        . "tellfixo = ?, "
+                        . "cell = ? "
                         . "where idFornecedor = ?");
                         $stmt->bindParam(1, $nomeFornecedor);
                         $stmt->bindParam(2, $logradouro);
