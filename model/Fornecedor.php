@@ -3,12 +3,12 @@ Class Fornecedor {
     private $idFornecedor;
     private $nomeFornecedor;
     private $email;
-    private $tellfixo;
+    private $tellFixo;
     private $cell;
     private $endereco;
     private $cep;
     private $logradouro;
-    private $UF;
+    private $uf;
     private $bairro;
     private $cidade;
     private $complemento;
@@ -75,25 +75,7 @@ Class Fornecedor {
         return $this;
     }
 
-    /**
-     * Get the value of tellfixo
-     */ 
-    public function getTellfixo()
-    {
-        return $this->tellfixo;
-    }
-
-    /**
-     * Set the value of tellfixo
-     *
-     * @return  self
-     */ 
-    public function setTellfixo($tellfixo)
-    {
-        $this->tellfixo = $tellfixo;
-
-        return $this;
-    }
+   
 
     /**
      * Get the value of cell
@@ -175,25 +157,7 @@ Class Fornecedor {
         return $this;
     }
 
-    /**
-     * Get the value of UF
-     */ 
-    public function getUF()
-    {
-        return $this->UF;
-    }
-
-    /**
-     * Set the value of UF
-     *
-     * @return  self
-     */ 
-    public function setUF($UF)
-    {
-        $this->UF = $UF;
-
-        return $this;
-    }
+    
 
     /**
      * Get the value of bairro
@@ -274,5 +238,44 @@ Class Fornecedor {
 
         return $this;
     }
+
+    /**
+     * Get the value of uf
+     */ 
+    public function getUf()
+    {
+        return $this->uf;
+    }
+
+    /**
+     * Set the value of uf
+     *
+     * @return  self
+     */ 
+    public function setUf($uf)
+    {
+        $this->uf = $uf;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of tellFixo
+     */ 
+    public function getTellFixo()
+    {
+        return $this->tellFixo;
+    }
+
+    /**
+     * Set the value of tellFixo
+     *
+     * @return  self
+     */ 
+    public function setTellFixo($tellFixo)
+    {
+        $this->tellFixo = $tellFixo;
+
+        return $this;
+    }
 }
-?>

@@ -1,12 +1,13 @@
+
 <?php
-//include_once 'C:/xampp/htdocs/PHPMatutinoPDO/dao/DaoFornecedor.php';
-//include_once 'C:/xampp/htdocs/PHPMatutinoPDO/model/Fornecedor.php';
+include_once 'C:/xampp/htdocs/projetoL7/dao/DaoFornecedor.php';
+include_once 'C:/xampp/htdocs/projetoL7/model/Fornecedor.php';
 
 class FornecedorController {
     
     public function inserirFornecedor($nomeFornecedor, $logradouro, 
            $complemento, $bairro, $cidade, $uf, $cep,
-            $representante, $email, $telFixo, $telCell){
+            $representante, $email, $tellFixo, $cell){
         $fornecedor = new Fornecedor();
         $fornecedor->setNomeFornecedor($nomeFornecedor);
         $fornecedor->setLogradouro($logradouro);
@@ -17,8 +18,8 @@ class FornecedorController {
         $fornecedor->setCep($cep);
         $fornecedor->setRepresentante($representante);
         $fornecedor->setEmail($email);
-        $fornecedor->setTellFixo($telFixo);
-        $fornecedor->setcell($telCell);
+        $fornecedor->setTellFixo($tellFixo);
+        $fornecedor->setcell($cell);
         
         $daoFornecedor = new DaoFornecedor();
         return $daoFornecedor->inserir($fornecedor);
@@ -27,7 +28,7 @@ class FornecedorController {
     //método para atualizar dados de produto no BD
     public function atualizarFornecedor($idFornecedor, $nomeFornecedor,
             $logradouro, $complemento, $bairro, $cidade, $uf, 
-            $cep, $representante, $email, $telFixo, $telCell){
+            $cep, $representante, $email, $tellFixo, $cell){
         $fornecedor = new Fornecedor();
         $fornecedor->setIdfornecedor($idFornecedor);
         $fornecedor->setNomeFornecedor($nomeFornecedor);
@@ -39,8 +40,8 @@ class FornecedorController {
         $fornecedor->setCep($cep);
         $fornecedor->setRepresentante($representante);
         $fornecedor->setEmail($email);
-        $fornecedor->setTellFixo($telFixo);
-        $fornecedor->setCell($telCell);
+        $fornecedor->setTellFixo($tellFixo);
+        $fornecedor->setCell($cell);
         $daoFornecedor = new DaoFornecedor();
         return $daoFornecedor->atualizarFornecedorDAO($fornecedor);
     }

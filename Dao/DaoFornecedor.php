@@ -1,7 +1,7 @@
 <?php
-//include_once 'C:/xampp/htdocs/PHPMatutinoPDO/bd/Conecta.php';
-//include_once 'C:/xampp/htdocs/PHPMatutinoPDO/model/Produto.php';
-//include_once 'C:/xampp/htdocs/PHPMatutinoPDO/model/Mensagem.php';
+include_once 'C:/xampp/htdocs/projetoL7/DataBase/conecta.php';
+include_once 'C:/xampp/htdocs/projetoL7/model/Produto.php';
+include_once 'C:/xampp/htdocs/projetoL7/model/Mensagem.php';
 
 class DaoFornecedor {
 
@@ -19,27 +19,28 @@ class DaoFornecedor {
             $cep = $fornecedor->getCep();
             $representante = $fornecedor->getRepresentante();
             $email = $fornecedor->getEmail();
-            $tellfixo = $fornecedor->getTellfixo();
+            $tellFixo = $fornecedor->getTellfixo();
             $cell = $fornecedor->getCell();
             try {
+                $conecta->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 $stmt = $conecta->prepare("insert into fornecedor values "
                         . "(null,?,?,?,?,?,?,?,?,?,?,?)");
                 $stmt->bindParam(1, $nomeFornecedor);
-                $stmt->bindParam(2, $logradoro);
-                $stmt->bindParam(3, $complemento);
-                $stmt->bindParam(4, $bairro);
-                $stmt->bindParam(5, $cidade);
-                $stmt->bindParam(6, $UF);
-                $stmt->bindParam(7, $cep);
-                $stmt->bindParam(8, $representante);
-                $stmt->bindParam(9, $email);
-                $stmt->bindParam(10, $telfixo);
-                $stmt->bindParam(11, $telcell);
+                $stmt->bindParam(2, $email);
+                $stmt->bindParam(3, $tellFixo);
+                $stmt->bindParam(4, $cell);
+                $stmt->bindParam(5, $cep);
+                $stmt->bindParam(6, $logradouro);
+                $stmt->bindParam(7, $uf);
+                $stmt->bindParam(8, $bairro);
+                $stmt->bindParam(9, $cidade);
+                $stmt->bindParam(10, $complemento);
+                $stmt->bindParam(11, $representante);
                 $stmt->execute();
                 $msg->setMsg("<p style='color: green;'>"
                         . "Dados Cadastrados com sucesso</p>");
-            } catch (Exception $ex) {
-                $msg->setMsg($ex);
+            } catch (PDOException $ex) {
+                $msg->setMsg(var_dump($ex->errorInfo));
             }
         }else{
             $msg->setMsg("<p style='color: red;'>"
@@ -61,43 +62,44 @@ class DaoFornecedor {
             $complemento = $fornecedor->getComplemento();
             $bairro = $fornecedor->getBairro();
             $cidade = $fornecedor->getCidade();
-            $UF = $fornecedor->getUF();
+            $uf = $fornecedor->getUF();
             $cep = $fornecedor->getCep();
             $representante = $fornecedor->getRepresentante();
             $email = $fornecedor->getEmail();
-            $tellfixo = $fornecedor->getTellfixo();
+            $tellFixo = $fornecedor->getTellfixo();
             $cell = $fornecedor->getCell();
             try{
+                $conecta->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 $stmt = $conecta->prepare("update fornecedor set "
-                        . "nomeForncedor = ?,"
-                        . "logradouro = ?,"
-                        . "complemento = ?, "
+                        . "nomeFornecedor = ?,"
+                        . "email = ?,"
+                        . "tellFixo = ?, "
+                        . "cell = ?, "
+                        . "cep = ? ,"
+                        . "logradouro = ? ,"
+                        . "uf = ? ,"
                         . "bairro = ?, "
                         . "cidade = ? ,"
-                        . "UF = ? ,"
-                        . "cep = ? ,"
-                        . "representante = ?, "
-                        . "email = ? ,"
-                        . "tellfixo = ?, "
-                        . "cell = ? "
+                        . "complemento = ?, "
+                        . "representante = ? "
                         . "where idFornecedor = ?");
                         $stmt->bindParam(1, $nomeFornecedor);
-                        $stmt->bindParam(2, $logradouro);
-                        $stmt->bindParam(3, $complemento);
-                        $stmt->bindParam(4, $bairro);
-                        $stmt->bindParam(5, $cidade);
-                        $stmt->bindParam(6, $UF);
-                        $stmt->bindParam(7, $cep);
-                        $stmt->bindParam(8, $representante);
-                        $stmt->bindParam(9, $email);
-                        $stmt->bindParam(10, $tellfixo);
-                        $stmt->bindParam(11, $cell);
+                        $stmt->bindParam(2, $email);
+                        $stmt->bindParam(3, $tellFixo);
+                        $stmt->bindParam(4, $cell);
+                        $stmt->bindParam(5, $cep);
+                        $stmt->bindParam(6, $logradouro);
+                        $stmt->bindParam(7, $uf);
+                        $stmt->bindParam(8, $bairro);
+                        $stmt->bindParam(9, $cidade);
+                        $stmt->bindParam(10, $complemento);
+                        $stmt->bindParam(11, $representante);
                         $stmt->bindParam(12, $idFornecedor);
                 $stmt->execute();
                 $msg->setMsg("<p style='color: blue;'>"
                         . "Dados atualizados com sucesso</p>");
-            } catch (Exception $ex) {
-                $msg->setMsg($ex);
+            } catch (PDOException $ex) {
+                $msg->setMsg(var_dump($ex->errorInfo));
             }
         }else{
             $msg->setMsg("<p style='color: red;'>"
@@ -114,6 +116,7 @@ class DaoFornecedor {
         $conecta = $conn->conectadb();
         if($conecta){
             try {
+                $conecta->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 $rs = $conecta->query("select * from fornecedor");
                 $lista = array();
                 $a = 0;
@@ -123,24 +126,24 @@ class DaoFornecedor {
                             $fornecedor = new Fornecedor();
                             $fornecedor->setIdFornecedor($linha->idFornecedor);
                             $fornecedor->setNomeFornecedor($linha->nomeFornecedor);
+                            $fornecedor->setEmail($linha->email);
+                            $fornecedor->setTellfixo($linha->tellFixo);
+                            $fornecedor->setCell($linha->cell);
+                            $fornecedor->setCep($linha->cep);
                             $fornecedor->setLogradouro($linha->logradouro);
-                            $fornecedor->setComplemento($linha->complemento);
+                            $fornecedor->setUf($linha->uf);
                             $fornecedor->setBairro($linha->bairro);
                             $fornecedor->setCidade($linha->cidade);
-                            $fornecedor->setUF($linha->UF);
-                            $fornecedor->setCep($linha->cep);
+                            $fornecedor->setComplemento($linha->complemento);
                             $fornecedor->setRepresentante($linha->representante);
-                            $fornecedor->setEmail($linha->email);
-                            $fornecedor->setTellFixo($linha->tellfixo);
-                            $fornecedor->setcell($linha->cell);
                             $lista[$a] = $fornecedor;
                             $a++;
                         }
                     }
                 }
-            } catch (Exception $ex) {
-                $msg->setMsg($ex);
-            }  
+            } catch (PDOException $ex) {
+                $msg->setMsg(var_dump($ex->errorInfo));
+            }
             $conn = null;           
             return $lista;
         }
@@ -153,14 +156,15 @@ class DaoFornecedor {
         $msg = new Mensagem();
         if($conecta){
              try {
+                $conecta->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 $stmt = $conecta->prepare("delete from fornecedor "
                         . "where idfornecedor = ?");
                 $stmt->bindParam(1, $id);
                 $stmt->execute();
                 $msg->setMsg("<p style='color: #d6bc71;'>"
                         . "Dados excluídos com sucesso.</p>");
-            } catch (Exception $ex) {
-                $msg->setMsg($ex);
+            } catch (PDOException $ex) {
+                $msg->setMsg(var_dump($ex->errorInfo));
             }
         }else{
             $msg->setMsg("<p style='color: red;'>'Banco inoperante!'</p>"); 
@@ -177,6 +181,7 @@ class DaoFornecedor {
         $fornecedor = new Fornecedor();
         if($conecta){
             try {
+                $conecta->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 $rs = $conecta->prepare("select * from fornecedor where "
                         . "idfornecedor = ?");
                 $rs->bindParam(1, $id);
@@ -185,22 +190,22 @@ class DaoFornecedor {
                         while($linha = $rs->fetch(PDO::FETCH_OBJ)){
                             $fornecedor->setIdFornecedor($linha->idFornecedor);
                             $fornecedor->setNomeFornecedor($linha->nomeFornecedor);
-                            $fornecedor->setLogradouro($linha->logradouro);   
-                            $fornecedor->setComplemento($linha->complemento);
-                            $fornecedor->setbairro($linha->bairro);
-                            $fornecedor->setCidade($linha->cidade);
-                            $fornecedor->setUF($linha->UF);
-                            $fornecedor->setCep($linha->cep);
-                            $fornecedor->setRepresentante($linha->representante);
                             $fornecedor->setEmail($linha->email);
-                            $fornecedor->setTellFixo($linha->tellfixo);
-                            $fornecedor->setcell($linha->telcell);
+                            $fornecedor->setTellfixo($linha->tellFixo);
+                            $fornecedor->setCell($linha->cell);
+                            $fornecedor->setCep($linha->cep);
+                            $fornecedor->setLogradouro($linha->logradouro);
+                            $fornecedor->setUf($linha->uf);
+                            $fornecedor->setBairro($linha->bairro);
+                            $fornecedor->setCidade($linha->cidade);
+                            $fornecedor->setComplemento($linha->complemento);
+                            $fornecedor->setRepresentante($linha->representante);
                         }
                     }
                 }
-            } catch (Exception $ex) {
-                $msg->setMsg($ex);
-            }  
+            } catch (PDOException $ex) {
+                $msg->setMsg(var_dump($ex->errorInfo));
+            } 
             $conn = null;
         }else{
             echo "<script>alert('Banco inoperante!')</script>";

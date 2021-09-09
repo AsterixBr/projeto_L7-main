@@ -5,7 +5,7 @@ class Conecta {
     public function conectadb(){
         $pdo = null;
         try{
-            $pdo = new PDO("mysql:host=localhost;dbname=dbproduto", 
+            $pdo = new PDO("mysql:host=localhost;dbname=l7grifes", 
                     "root", "senac");
         } catch (Exception $ex) {
             echo "<script>alert('Erro na conexão com o "
@@ -13,7 +13,7 @@ class Conecta {
         }   
         return $pdo;
     }
-
+/*
     public function make_hash($str){
         return sha1(md5($str));
     }	
@@ -23,5 +23,5 @@ class Conecta {
             return false;
         }
         return true;
-    }
+    }*/
 }
