@@ -40,8 +40,7 @@ $daoMarca = new DaoMarca();
     public function pesquisarMarcaId($id){
         $daoMarca = new DaoMarca();
         return $daoMarca->pesquisarMarcaIdDAO($id);
-    }
-    
+    } 
     //método para limpar formulário
     public function limpar(){
         return $fr = new Marca();

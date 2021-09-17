@@ -1,5 +1,4 @@
 <?php
-
 include_once 'C:/xampp\htdocs/ProjetoL7/Controller/FornecedorController.php';
 include_once 'C:/xampp/htdocs/ProjetoL7/model/Fornecedor.php';
 include_once 'C:/xampp/htdocs/ProjetoL7/model/Mensagem.php';
@@ -201,15 +200,16 @@ $btExcluir = FALSE;
                             <input class="form-control" type="text" onkeypress="mascara(this, '## #####-####')" maxlength="13" value="<?php echo $fr->getcell(); ?>" name="cell">
                             <input type="submit" name="cadastrarFornecedor" class="btn btn-success btInput" value="Enviar" <?php if ($btEnviar == TRUE) echo "disabled"; ?>>
                             <input type="submit" name="atualizarFornecedor" class="btn btn-secondary btInput" value="Atualizar" <?php if ($btAtualizar == FALSE) echo "disabled"; ?>>
-                            <button type="button" class="btn btn-warning btInput" data-bs-toggle="modal" data-bs-target="#ModalExcluir" <?php if ($btExcluir == FALSE) echo "disabled"; ?>>
+                            <button type="button" class="btn btn-warning btInput" data-bs-toggle="modal" data-bs-target="#exampleModal" 
+                            <?php if ($btExcluir == FALSE) echo "disabled"; ?>>
                                 Excluir
                             </button>
                             <!-- Modal para excluir -->
-                            <div class="modal fade" id="ModalExcluir" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="exampleModalLabel">
+                                            <h5 class="modal-title" id="ModalLabel">
                                                 Confirmar Exclusão</h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                                             </button>
@@ -264,12 +264,12 @@ $btExcluir = FALSE;
                                         <td><?php print_r($lf->getEmail()); ?></td>
                                         <td><?php print_r($lf->getTellFixo()); ?></td>
                                         <td><?php print_r($lf->getCell()); ?></td>
-                                        <td><?php print_r($lf->getUf()); ?></td>
+                                        <td><?php print_r($lf->getUF()); ?></td>
                                         <td><a href="cadastroFornecedor.php?id=<?php echo $lf->getIdFornecedor(); ?>" class="btn btn-light">
-                                                atualizar</a>
+                                                Editar</a>
                                             </form>
                                             <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#exampleModal<?php echo $a; ?>">
-                                                excluir</button>
+                                                Excluir</button>
                                         </td>
                                     </tr>
                                     <!-- Modal -->
@@ -278,22 +278,25 @@ $btExcluir = FALSE;
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    <button type="button" class="btn-close" 
+                                                            data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
                                                     <form method="post" action="">
-                                                        <label><strong>Deseja excluir o fornecedor
+                                                        <label><strong>Deseja excluir o fornecedor 
                                                                 <?php echo $lf->getNomeFornecedor(); ?>?</strong></label>
-                                                        <input type="hidden" name="ide" value="<?php echo $lf->getIdfornecedor(); ?>">
+                                                        <input type="hidden" name="ide" 
+                                                               value="<?php echo $lf->getIdfornecedor(); ?>">
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="submit" name="excluir" class="btn btn-primary">Sim</button>
+                                                            <button type="reset" class="btn btn-secondary" 
+                                                                    data-bs-dismiss="modal">Não</button>
+                                                        </div>
+                                                    </form>
                                                 </div>
-                                                <div class="modal-footer">
-                                                    <button type="submit" name="excluir" class="btn btn-primary">Sim</button>
-                                                    <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">Não</button>
-                                                </div>
-                                                </form>
                                             </div>
                                         </div>
-                                    </div>
                             <?php
                                 }
                             }

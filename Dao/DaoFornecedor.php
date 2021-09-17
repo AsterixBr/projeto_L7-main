@@ -158,7 +158,7 @@ class DaoFornecedor {
              try {
                 $conecta->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 $stmt = $conecta->prepare("delete from fornecedor "
-                        . "where idfornecedor = ?");
+                        . "where idFornecedor = ?");
                 $stmt->bindParam(1, $id);
                 $stmt->execute();
                 $msg->setMsg("<p style='color: #d6bc71;'>"
