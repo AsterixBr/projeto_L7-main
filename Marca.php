@@ -125,12 +125,12 @@ $btExcluir = FALSE;
                             <?php
                                         }
                             ?>
-                <label>Nome</label>
-                <input type="text" class="form-control" name="name" placeholder="Insira o nome da marca" autocomplete="off" value="<?php echo $fr->getNomeMarca(); ?>">
+                <label>Nom</label>
+                <input type="text" class="form-control" name="nomeMarca" placeholder="Insira o nome da marca" autocomplete="off" value="<?php echo $fr->getNomeMarca(); ?>">
                 <label>Representante</label>
                 <input type="text" class="form-control" name="representante" placeholder="Insira o nome do representante" autocomplete="off" value="<?php echo $fr->getRepresentante(); ?>">
                 <label>E-mail</label>
-                <input type="email" class="form-control" name="email" placeholder="Insira o email representante" autocomplete="off"value="<?php echo $fr->getEmailRepresentante(); ?>">
+                <input type="email" class="form-control" name="emailRepresentante" placeholder="Insira o email representante" autocomplete="off"value="<?php echo $fr->getEmailRepresentante(); ?>">
             </div>
             <div style="text-align: center;">
                 <a href="#" role="button" class="btn btn-primary btn-sm">Voltar ao menu</a>
