@@ -1,5 +1,6 @@
 <?php
-
+include_once 'C:/xampp/htdocs/projetoL7/dao/DaoMarca.php';
+include_once 'C:/xampp/htdocs/projetoL7/model/Marca.php';
 class  MarcaController{
 
     public function inserirMarca($nomeMarca, $representante, 
@@ -13,7 +14,7 @@ class  MarcaController{
  return $daoMarca->inserir($marca);
 }
 
-public function atualizarFornecedor($idMarca,$nomeMarca, $representante, 
+public function atualizarMarca($idMarca,$nomeMarca, $representante, 
 $emailRepresentante){
 $marca = new Marca();
 $marca->setIdMarca($idMarca);
@@ -40,7 +41,8 @@ $daoMarca = new DaoMarca();
     public function pesquisarMarcaId($id){
         $daoMarca = new DaoMarca();
         return $daoMarca->pesquisarMarcaIdDAO($id);
-    } 
+    }
+    
     //método para limpar formulário
     public function limpar(){
         return $fr = new Marca();

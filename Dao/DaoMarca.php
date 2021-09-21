@@ -1,6 +1,10 @@
 <?php
+include_once 'C:/xampp/htdocs/projetoL7/DataBase/conecta.php';
+include_once 'C:/xampp/htdocs/projetoL7/model/Marca.php';
+include_once 'C:/xampp/htdocs/projetoL7/model/Mensagem.php';
 
 class DaoMarca{
+
     public function inserir(Marca $marca){
         $conn = new Conecta();
         $msg = new Mensagem();
@@ -10,17 +14,18 @@ class DaoMarca{
             $representante = $marca->getRepresentante();
             $emailRepresentante = $marca->getEmailRepresentante();
             try {
+                $conecta->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 $stmt = $conecta->prepare("insert into marca values "
                         . "(null,?,?,?)");
                 $stmt->bindParam(1, $nomeMarca);
                 $stmt->bindParam(2, $representante);
                 $stmt->bindParam(3, $emailRepresentante);
-               
                 $stmt->execute();
+                
                 $msg->setMsg("<p style='color: green;'>"
                         . "Dados Cadastrados com sucesso</p>");
-            } catch (Exception $ex) {
-                $msg->setMsg($ex);
+            } catch (PDOException $ex) {
+                $msg->setMsg(var_dump($ex->errorInfo));
             }
         }else{
             $msg->setMsg("<p style='color: red;'>"
@@ -41,6 +46,7 @@ class DaoMarca{
             $emailRepresentante = $marca->getEmailRepresentante();
          
             try{
+                $conecta->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 $stmt = $conecta->prepare("update marca set "
                         . "nomeMarca = ?,"
                         . "representante = ?,"
@@ -53,8 +59,8 @@ class DaoMarca{
                 $stmt->execute();
                 $msg->setMsg("<p style='color: blue;'>"
                         . "Dados atualizados com sucesso</p>");
-            } catch (Exception $ex) {
-                $msg->setMsg($ex);
+            } catch (PDOException $ex) {
+                $msg->setMsg(var_dump($ex->errorInfo));
             }
         }else{
             $msg->setMsg("<p style='color: red;'>"
@@ -70,6 +76,7 @@ class DaoMarca{
         $conecta = $conn->conectadb();
         if($conecta){
             try {
+                $conecta->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 $rs = $conecta->query("select * from marca");
                 $lista = array();
                 $a = 0;
@@ -86,9 +93,9 @@ class DaoMarca{
                         }
                     }
                 }
-            } catch (Exception $ex) {
-                $msg->setMsg($ex);
-            }  
+            } catch (PDOException $ex) {
+                $msg->setMsg(var_dump($ex->errorInfo));
+            }
             $conn = null;           
             return $lista;
         }
@@ -100,14 +107,15 @@ class DaoMarca{
         $msg = new Mensagem();
         if($conecta){
              try {
+                $conecta->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 $stmt = $conecta->prepare("delete from marca "
                         . "where idMarca = ?");
                 $stmt->bindParam(1, $id);
                 $stmt->execute();
                 $msg->setMsg("<p style='color: #d6bc71;'>"
                         . "Dados excluídos com sucesso.</p>");
-            } catch (Exception $ex) {
-                $msg->setMsg($ex);
+            } catch (PDOException $ex) {
+                $msg->setMsg(var_dump($ex->errorInfo));
             }
         }else{
             $msg->setMsg("<p style='color: red;'>'Banco inoperante!'</p>"); 
@@ -123,6 +131,7 @@ class DaoMarca{
         $marca = new Marca();
         if($conecta){
             try {
+                $conecta->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 $rs = $conecta->prepare("select * from marca where "
                         . "idMarca = ?");
                 $rs->bindParam(1, $id);
@@ -137,9 +146,9 @@ class DaoMarca{
                         }
                     }
                 }
-            } catch (Exception $ex) {
-                $msg->setMsg($ex);
-            }  
+            } catch (PDOException $ex) {
+                $msg->setMsg(var_dump($ex->errorInfo));
+            }
             $conn = null;
         }else{
             echo "<script>alert('Banco inoperante!')</script>";
