@@ -235,7 +235,7 @@ $btExcluir = FALSE;
         <div class="col-md-8">
             <div class="row">
                 <div class="col-md-12">
-                    <table class="table table-striped table-responsive" style="border-radius: 3px; overflow:hidden;">
+                    <table class="table table-striped table-responsive" style="border-radius: 3px; overflow:hidden; text-align: center;">
                         <thead class="table-dark">
                             <tr>
                                 <th>Código</th>
