@@ -19,6 +19,38 @@ $btExcluir = FALSE;
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <title>Marca</title>
 </head>
+<header style="color: white;">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark ml-5">
+        <div class="container-fluid">
+            <a href="#" class="navbar-brand">L7 Grifes</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="true" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse show" id="navbarCollapse" style>
+                <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Produtos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">Carrinho</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link"></a>
+                    </li>
+                </ul>
+                <div>
+                    <a href="Login.html" class="animated-button1">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        LOGIN/CADASTRO
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
 
 <body>
     <div class="container-fluid">

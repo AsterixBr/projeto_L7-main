@@ -5,7 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Produtos</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
 
   <style>
     #container {
@@ -14,6 +15,38 @@
   </style>
 
 </head>
+<header style="color: white;">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark ml-5">
+    <div class="container-fluid">
+      <a href="#" class="navbar-brand">L7 Grifes</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="true" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="navbar-collapse collapse show" id="navbarCollapse" style>
+        <ul class="navbar-nav me-auto mb-2 mb-md-0">
+          <li class="nav-item">
+            <a href="#" class="nav-link">Produtos</a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">Carrinho</a>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link"></a>
+          </li>
+        </ul>
+        <div>
+          <a href="Login.html" class="animated-button1">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            LOGIN/CADASTRO
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
 
 <body>
   <div class="container" style="margin-top: 40px" id="container">
@@ -50,28 +83,25 @@
         </select>
       </div>
       <div class="form-group">
-      <label>Marca</label>
-            <select class="form-control" name="marca" placeholder="Escolha a marca" autocomplete="off">
-  </select>
-      <div class="form-group">
-        <label>Fornecedor</label>
-        <select class="form-control" name="fornecedor">
-
+        <label>Marca</label>
+        <select class="form-control" name="marca" placeholder="Escolha a marca" autocomplete="off">
         </select>
-      </div>
-      <div style="text-align: center;">
-        <a href="#" role="button" class="btn btn-primary btn-sm">Voltar ao menu</a>
-        <button type="submit" id="botao" class="btn btn-success btn-sm">Cadastrar</button>
-      </div>
+        <div class="form-group">
+          <label>Fornecedor</label>
+          <select class="form-control" name="fornecedor">
+
+          </select>
+        </div>
+        <br>
+        <div style="text-align: center;">
+          <a href="#" role="button" class="btn btn-primary btn-sm">Voltar ao menu</a>
+          <button type="submit" id="botao" class="btn btn-success btn-sm">Cadastrar</button>
+        </div>
     </form>
   </div>
 
-  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
-  </script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
-  </script>
+  <script src="js/bootstrap.js"></script>
+    <script src="js/bootstrap.min.js"></script>
 
 </body>
 
