@@ -135,12 +135,32 @@ $btExcluir = FALSE;
                             <br>
                             <div style="text-align: center;">
                                 <input type="submit" name="limpar" class="btn btn-warning btInput" value="Limpar">
-                                <input type="submit" name="excluirMarca" class="btn btn-danger btInput" value="Excluir" <?php if ($btExcluir == FALSE) echo "disabled"; ?>>
+                                <input type="button" name="excluirMarca" class="btn btn-danger btInput" value="Excluir" data-bs-toggle="modal" data-bs-target="#exampleModal" <?php if ($btExcluir == FALSE) echo "disabled"; ?>>
                                 <input type="submit" name="atualizarMarca" class="btn btn-primary btInput" value="Atualizar" <?php if ($btAtualizar == FALSE) echo "disabled"; ?>>
                                 <button type="submit" name="cadastrarMarca" class="btn btn-success btnInput" <?php if ($btEnviar == TRUE) echo "disabled"; ?>>Adicionar</button>
                             </div>
+                            <!-- Modal para excluir -->
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="ModalLabel">
+                                                Confirmar Exclusão</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h5>Deseja Excluir?</h5>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <input type="submit" name="excluirMarca" class="btn btn-success " value="Sim">
+                                            <input type="submit" class="btn btn-light btInput" name="limpar" value="Não">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- fim do modal para excluir -->
                             &nbsp;&nbsp;
-
                             <br>
                         </form>
                     </div>
