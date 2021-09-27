@@ -1,8 +1,8 @@
 <?php
-//include_once 'C:/xampp/htdocs/PHPMatutinoPDO/bd/Conecta.php';
-//include_once 'C:/xampp/htdocs/PHPMatutinoPDO/model/Produto.php';
-//include_once 'C:/xampp/htdocs/PHPMatutinoPDO/model/Mensagem.php';
-//include_once 'C:/xampp/htdocs/PHPMatutinoPDO/model/Fornecedor.php';
+//include_once 'C:/xampp/htdocs/projetol7/bd/Conecta.php';
+//include_once 'C:/xampp/htdocs/projetol7/model/Produto.php';
+//include_once 'C:/xampp/htdocs/projetol7/model/Mensagem.php';
+//include_once 'C:/xampp/htdocs/projetol7/model/Fornecedor.php';
 
 
 
@@ -121,10 +121,13 @@ class DaoProduto
         $conecta = $conn->conectadb();
         if ($conecta) {
             try {
-                $rs = $conecta->query("SELECT * FROM produto inner join fornecedor "
-                    . "on produto.FkFornecedor = fornecedor.idFornecedor order by produto.idproduto asc ");
+                $rs = $conecta->query("SELECT * FROM produto inner join fornecedor 
+                    . on produto.FkFornecedor = fornecedor.idFornecedor
+                    . inner join marca on.produto.FkMarca = marca.idMarca
+                    . order by produto.idproduto asc");
                 $lista = array();
                 $a = 0;
+                $b = 0;
                 if ($rs->execute()) {
                     if ($rs->rowCount() > 0) {
                         while ($linha = $rs->fetch(PDO::FETCH_OBJ)) {
@@ -161,7 +164,7 @@ class DaoProduto
                             $form1 = new Marca();
                             $form1->setIdMarca($linha->idMarca);
                             $form1->setNomeMarca($linha->nomeMarca);
-                            $form1->setRepresetante($linha->representante)
+                            $form1->setRepresentante($linha->representante);
                             $form1->setEmailRepresentante($linha->emailRepresetante);
                             $produto->setFkMarca($form1);
 
@@ -247,7 +250,7 @@ class DaoProduto
                             $form1 = new Marca();
                             $form1->setIdMarca($linha->idMarca);
                             $form1->setNomeMarca($linha->nomeMarca);
-                            $form1->setRepresetante($linha->representante)
+                            $form1->setRepresentante($linha->representante);
                             $form1->setEmailRepresentante($linha->emailRepresetante);
                             $produto->setFkMarca($form1);
                         }
@@ -260,7 +263,7 @@ class DaoProduto
         } else {
             echo "<script>alert('Banco inoperante!')</script>";
             echo "<META HTTP-EQUIV='REFRESH' CONTENT=\"0;
-			 URL='../PHPMatutino01/cadastroProduto.php'\">";
+			 URL='../projetol7/cadastroProduto.php'\">";
         }
         return $produto;
     }
