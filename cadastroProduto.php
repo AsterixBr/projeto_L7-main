@@ -127,8 +127,7 @@ $btExcluir = FALSE;
       $lote = $_POST['lote'];
       $dtCompra = $_POST['dtcompra'];
       $FkFornecedor = $_POST['FkFornecedor'];
-      $FkMarca = $_POST['marca'];
-
+      $FkMarca = $_POST['FkMarca'];
       $pc = new ProdutoController();
       unset($_POST['atualizarProduto']);
       $msg = $pc->atualizarProduto(
@@ -192,8 +191,8 @@ $btExcluir = FALSE;
   }
   ?>
   <form method="post" action="" enctype="multipart/form-data">
-    <div class="row">
-      <div class="col-md-12">
+    <div class="form-group">
+      <div class="col-md-6">
         <strong>Código: <label style="color:red;">
             <?php
             if ($pr != null) {
@@ -216,7 +215,7 @@ $btExcluir = FALSE;
       <div class="row">
         <div class="col-md-6">
 
-          <label>Nome do produto</label>
+          <label>Produto</label>
           <input type="text" class="form-control" name="nomeproduto" placeholder="Insira o nome do produto" autocomplete="off" value="<?php echo $pr->getNomeProduto(); ?>">
           <label>Cor</label>
           <input type="text" class="form-control" name="cor" placeholder="Insira a cor do produto" autocomplete="off" value="<?php echo $pr->getCor(); ?>">
@@ -244,50 +243,185 @@ $btExcluir = FALSE;
       <label>Marca</label> <label style="color: red; font-size: 11px;" id="respMarca"></label>
       <select class="form-control" id="FKMarca" onblur="return selectMarca();" name="FkMarca" placeholder="Escolha a marca">
         <option value="-1">[--SELECIONE--]</option>
-      <?php
+        <?php
         $mc = new MarcaController();
         $lpr = $mc->listarMarcas();
-        foreach ($lpr as $m){
-      ?>
-      
-            <option 
-              <?php 
-              if($pr->getFkMarca()->getIdMarca() != null){
-                if($pr->getFkMarca()->getIdMarca == $m->getIdMarca()) echo "selected = 'selected'";
-              }?>
-            value="<?php echo $m->getIdMarca(); ?>"><?php echo $m->getNomeMarca(); ?></option>
-      <?php
+        foreach ($lpr as $m) {
+        ?>
+
+          <option <?php
+                  if ($pr->getFkMarca()->getIdMarca() != null) {
+                    if ($pr->getFkMarca()->getIdMarca == $m->getIdMarca()) echo "selected = 'selected'";
+                  } ?> value="<?php echo $m->getIdMarca(); ?>"><?php echo $m->getNomeMarca(); ?></option>
+        <?php
         }
-      ?>
+        ?>
       </select>
       <div class="form-group">
-        <label>Fornecedor</label>
-        <select class="form-control" name="FkFornecedor" >
-          <option value="<?php echo $pr->getFkFornecedor()->getIdFornecedor(); ?>"><?php echo $pr->getFkFornecedor()->getNomeFornecedor(); ?></option>
+        <label>Fornecedor</label> <label style="color: red; font-size: 11px;" id="respFornecedor"></label>
+        <select class="form-control" id="FkFornecedor" onblur="return selectFornecedor();" name="FkFornecedor" placeholder="Escolha o fornecedor">
+          <option value="-1">[--SELECIONE--]</option>
+          <?php
+          $fcc = new FornecedorController();
+          $lpr = $fcc->listarFornecedores();
+          foreach ($lpr as $f) {
+          ?>
+
+            <option <?php
+                    if ($pr->getFkFornecedor()->getIdFornecedor() != null) {
+                      if ($pr->getFkFornecedor()->getIdFornecedor == $f->getIdFornecedor()) echo "selected = 'selected'";
+                    } ?> value="<?php echo $f->getIdFornecedor(); ?>"><?php echo $f->getNomeFornecedor(); ?></option>
+          <?php
+          }
+          ?>
         </select>
       </div>
       <br>
-      <div style="text-align: center;">
-        <a href="#" role="button" class="btn btn-primary btn-sm">Voltar ao menu</a>
-        <button type="submit" id="botao" class="btn btn-success btn-sm">Cadastrar</button>
-      </div>
+      <input type="submit" name="cadastrarPproduto" class="btn btn-success btInput" value="Enviar" <?php if ($btEnviar == TRUE) echo "disabled"; ?>>
+                            <input type="submit" name="atualizarProduto" class="btn btn-secondary btInput" value="Atualizar" <?php if ($btAtualizar == FALSE) echo "disabled"; ?>>
+                            <button type="button" class="btn btn-warning btInput" data-bs-toggle="modal" data-bs-target="#exampleModal" 
+                            <?php if ($btExcluir == FALSE) echo "disabled"; ?>>
+                                Excluir
+                            </button>
+                            <!-- Modal para excluir -->
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="ModalLabel">
+                                                Confirmar Exclusão</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h5>Deseja Excluir?</h5>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <input type="submit" name="excluirProduto" class="btn btn-success " value="Sim">
+                                            <input type="submit" class="btn btn-light btInput" name="limpar" value="Não">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- fim do modal para excluir -->
+                            &nbsp;&nbsp;
+                            <input type="submit" class="btn btn-light btInput" name="limpar" value="Limpar">
+                            </div>
   </form>
+  <div class="col-md-8">
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-striped table-responsive" style="border-radius: 3px; overflow:hidden; text-align: center;">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Código</th>
+                                <th>Categoria</th>
+                                <th>Nome produto</th>
+                                <th>Cor</th>
+                                <th>Tamanho</th>
+                                <th>Valor compra</th>
+                                <th>Valor venda</th>
+                                <th>Estoque</th>
+                                <th>Lote</th>
+                                <th>Data da compra</th>
+                                <th>Marca</th>
+                                <th>Fornecedor</th>
+                                <th colspan="2">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $fcTable = new ProdutoController();
+                            $$listarProdutos = $fcTable->listarProdutos();
+                            $a = 0;
+                            if ($$listarProdutos != null) {
+                                foreach ($$listarProdutos as $lf) {
+                                    $a++;
+                            ?>
+                                    <tr>
+                                        <td><?php print_r($lf->getIdProduto()); ?></td>
+                                        <td><?php print_r($lf->getCategoria()); ?></td>
+                                        <td><?php print_r($lf->getNomeProduto()); ?></td>
+                                        <td><?php print_r($lf->getCor()); ?></td>
+                                        <td><?php print_r($lf->getTamanho()); ?></td>
+                                        <td><?php print_r($lf->getVlrCompra()); ?></td>
+                                        <td><?php print_r($lf->getVlrVenda()); ?></td>
+                                        <td><?php print_r($lf->getQtdEstoque()); ?></td>
+                                        <td><?php print_r($lf->getLote()); ?></td>
+                                        <td><?php print_r($lf->getDtCompra()); ?></td>
+                                        <td><?php print_r($lf->getFkMarca()); ?></td>
+                                        <td><?php print_r($lf->getFkFornecedor()); ?></td>
+                                        <td><a href="cadastroProduto.php?id=<?php echo $lf->getIdProduto(); ?>" class="btn btn-light">
+                                                Editar</a>
+                                            </form>
+                                            <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#exampleModal<?php echo $a; ?>">
+                                                Excluir</button>
+                                        </td>
+                                    </tr>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="exampleModal<?php echo $a; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Excluir Produto</h5>
+                                                    <button type="button" class="btn-close" 
+                                                            data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form method="post" action="">
+                                                        <label><strong>Deseja excluir o Produto 
+                                                                <?php echo $lf->getNomeProduto(); ?>?</strong></label>
+                                                        <input type="hidden" name="ide" 
+                                                               value="<?php echo $lf->getNome(); ?>">
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="submit" name="excluir" class="btn btn-primary">Sim</button>
+                                                            <button type="reset" class="btn btn-secondary" 
+                                                                    data-bs-dismiss="modal">Não</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                            <?php
+                                }
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
 </div>
+
 
 <script src="js/bootstrap.js"></script>
 <script src="js/bootstrap.min.js"></script>
 <script>
-  function selectMarca(){
+  function selectMarca() {
     var fkMarca = document.getElementById('FKMarca').value;
 
-    if(fkMarca == -1){
+    if (fkMarca == -1) {
       document.getElementById("respMarca").innerHTML = " * Selecione a marca";
       return false;
-    }else{
+    } else {
       document.getElementById("respMarca").innerHTML = "";
     }
   }
 </script>
+<script>
+  function SelectFornecedor() {
+    var FkFornecedor = document.getElementById('FkFornecedor').value;
+
+    if (FkFornecedor == -1) {
+      document.getElementById("respFornecedor").innerHTML = " * Selecione o Fornecedor";
+      return false;
+    } else {
+      document.getElementById("respFornecedor").innerHTML = "";
+    }
+  }
+</script>
+
 </body>
 
 </html>

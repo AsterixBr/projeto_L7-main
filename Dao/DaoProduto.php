@@ -1,8 +1,9 @@
 <?php
-//include_once 'C:/xampp/htdocs/projetol7/bd/Conecta.php';
-//include_once 'C:/xampp/htdocs/projetol7/model/Produto.php';
-//include_once 'C:/xampp/htdocs/projetol7/model/Mensagem.php';
-//include_once 'C:/xampp/htdocs/projetol7/model/Fornecedor.php';
+include_once 'C:/xampp/htdocs/projetol7/DataBase/Conecta.php';
+include_once 'C:/xampp/htdocs/projetol7/model/Produto.php';
+include_once 'C:/xampp/htdocs/projetol7/model/Mensagem.php';
+include_once 'C:/xampp/htdocs/projetol7/model/Fornecedor.php';
+include_once 'C:/xampp/htdocs/projetol7/model/Marca.php';
 
 
 
@@ -137,8 +138,8 @@ class DaoProduto
                             $produto->setCategoria($linha->categoria);
                             $produto->setCor($linha->cor);
                             $produto->setTamanho($linha->tamanho);
-                            $produto->setVlrCompra($linha->valorCompra);
-                            $produto->setVlrVenda($linha->valorVenda);
+                            $produto->setVlrCompra($linha->vlrCompra);
+                            $produto->setVlrVenda($linha->vlrVenda);
                             $produto->setQtdEstoque($linha->qtdEstoque);
                             $produto->setLote($linha->lote);
                             $produto->setDtCompra($linha->dtCompra);
@@ -146,16 +147,16 @@ class DaoProduto
                             $form = new Fornecedor();
                             $form->setIdfornecedor($linha->idFornecedor);
                             $form->setNomeFornecedor($linha->nomeFornecedor);
-                            $form->setLogradouro($linha->logradouro);
-                            $form->setComplemento($linha->complemento);
-                            $form->setBairro($linha->bairro);
-                            $form->setCidade($linha->cidade);
-                            $form->setUf($linha->UF);
-                            $form->setCep($linha->cep);
-                            $form->setRepresentante($linha->representante);
                             $form->setEmail($linha->email);
                             $form->setTellFixo($linha->tellfixo);
                             $form->setcell($linha->cell);
+                            $form->setCep($linha->cep);
+                            $form->setLogradouro($linha->logradouro);
+                            $form->setUf($linha->UF);
+                            $form->setBairro($linha->bairro);
+                            $form->setCidade($linha->cidade);
+                            $form->setComplemento($linha->complemento);
+                            $form->setRepresentante($linha->representante);
                             $produto->setFkFornecedor($form);
 
                             $lista[$a] = $produto;
@@ -215,7 +216,10 @@ class DaoProduto
         $produto = new Produto();
         if ($conecta) {
             try {
-                $rs = $conecta->prepare("select * from produto inner join fornecedor on produto.FkFornecedor = fornecedor.idFornecedor where produto.idproduto = ?");
+                $rs = $conecta->prepare("SELECT * FROM produto inner join fornecedor 
+                . on produto.FkFornecedor = fornecedor.idFornecedor
+                . inner join marca on.produto.FkMarca = marca.idMarca
+                . order by produto.idproduto asc");
                 $rs->bindParam(1, $id);
                 if ($rs->execute()) {
                     if ($rs->rowCount() > 0) {
@@ -225,9 +229,8 @@ class DaoProduto
                             $produto->setCategoria($linha->categoria);
                             $produto->setCor($linha->cor);
                             $produto->setTamanho($linha->tamanho);
-                            $produto->setVlrCompra($linha->valorCompra);
-                            $produto->setVlrVenda($linha->valorVenda);
-                            $produto->setQtdEstoque($linha->qtdEstoque);
+                            $produto->setVlrCompra($linha->vlrCompra);
+                            $produto->setVlrVenda($linha->vlrVenda);
                             $produto->setQtdEstoque($linha->qtdEstoque);
                             $produto->setLote($linha->lote);
                             $produto->setDtCompra($linha->dtCompra);
@@ -235,16 +238,16 @@ class DaoProduto
                             $form = new Fornecedor();
                             $form->setIdfornecedor($linha->idFornecedor);
                             $form->setNomeFornecedor($linha->nomeFornecedor);
-                            $form->setLogradouro($linha->logradouro);
-                            $form->setComplemento($linha->complemento);
-                            $form->setBairro($linha->bairro);
-                            $form->setCidade($linha->cidade);
-                            $form->setUf($linha->UF);
-                            $form->setCep($linha->cep);
-                            $form->setRepresentante($linha->representante);
                             $form->setEmail($linha->email);
                             $form->setTellFixo($linha->tellfixo);
-                            $form->setCell($linha->cell);
+                            $form->setcell($linha->cell);
+                            $form->setCep($linha->cep);
+                            $form->setLogradouro($linha->logradouro);
+                            $form->setUf($linha->UF);
+                            $form->setBairro($linha->bairro);
+                            $form->setCidade($linha->cidade);
+                            $form->setComplemento($linha->complemento);
+                            $form->setRepresentante($linha->representante);
                             $produto->setFkFornecedor($form);
 
                             $form1 = new Marca();
