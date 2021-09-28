@@ -2,13 +2,19 @@
 include_once 'controller/ProdutoController.php';
 include_once './model/Produto.php';
 include_once './model/Fornecedor.php';
+include_once './model/Marca.php';
 include_once './model/Mensagem.php';
 include_once 'controller/FornecedorController.php';
+include_once './controller/MarcaController.php';
+
+$fm = new marcacontroller();
 $fcc = new FornecedorController();
 $msg = new Mensagem();
 $pr = new Produto();
 $fornecedor = new Fornecedor();
 $pr->setFkFornecedor($fornecedor);
+$marca = new Marca();
+$pr->setFkMarca($marca);
 $btEnviar = FALSE;
 $btAtualizar = FALSE;
 $btExcluir = FALSE;
@@ -24,7 +30,7 @@ $btExcluir = FALSE;
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Produtos</title>
   <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
 
   <style>
     #container {
@@ -67,170 +73,221 @@ $btExcluir = FALSE;
 </header>
 
 <body>
-  <div class="container" style="margin-top: 40px" id="container">
 
-    <h3>Cadastro de produto</h3>
-
-    <form action="_inserir_produto.php" method="post" style="margin-top: 20px">
-      <div class="form-group">
-        <div class="row">
-          <div class="col-md-6">
-          <?php
-                        //envio dos dados para o BD
-                        if (isset($_POST['cadastrarProduto
+  <?php
+  //envio dos dados para o BD
+  if (isset($_POST['cadastrarProduto
                         '])) {
-                            $nomeProduto = trim($_POST['nomeProduto']);
-                            if ($nomeProduto != "") {
-                                $categoria = $_POST['categoria'];
-                                $cor = $_POST['cor'];
-                                $tamanho = $_POST['tamanho'];
-                                $vlrCompra = $_POST['vlrcompra'];
-                                $vlrVenda = $_POST['vlrvenda'];   
-                                $qtdEstoque = $_POST['quantidade'];   
-                                $lote = $_POST['lote'];   
-                                $dtCompra = $_POST['dtcompra'];   
-                                $FkFornecedor = $_POST['fornecedor'];   
-                                $FkMarca = $_POST['marca'];          
-                                
-                                $pc = new ProdutoController();
-                                unset($_POST['cadastrarProduto']);
-                                $msg = $pc->inserirProduto($categoria, $nomeProduto, 
-                                $cor, $tamanho, $vlrCompra, $vlrVenda, $qtdEstoque, $lote, $dtCompra, $FkFornecedor, $FkMarca);
-                                
-                                echo $msg->getMsg();
-                                echo "<META HTTP-EQUIV='REFRESH' CONTENT=\"2;
-                                    URL='cadastroProduto.php'\">";
-                            }
-                        }
-                        
-                        //método para atualizar dados do produto no BD
-                        if (isset($_POST['atualizarProduto'])) {
-                            $nomeProduto = trim($_POST['nomeProduto']);
-                            if ($nomeProduto != "") {
-                                $idProduto = $_POST['idproduto'];
-                                $categoria = $_POST['categoria'];
-                                $cor = $_POST['cor'];
-                                $tamanho = $_POST['tamanho'];
-                                $vlrCompra = $_POST['vlrcompra'];
-                                $vlrVenda = $_POST['vlrvenda'];   
-                                $qtdEstoque = $_POST['quantidade'];   
-                                $lote = $_POST['lote'];   
-                                $dtCompra = $_POST['dtcompra'];   
-                                $FkFornecedor = $_POST['fornecedor'];   
-                                $FkMarca = $_POST['marca'];        
-                                
-                                $pc = new ProdutoController();
-                                unset($_POST['atualizarProduto']);
-                                $msg = $pc->atualizarProduto($idProduto, $categoria, $nomeProduto, 
-                                $cor, $tamanho, $vlrCompra, $vlrVenda, $qtdEstoque, $lote, $dtCompra, $FkFornecedor, $FkMarca);
-                                echo $msg->getMsg();
-                                $pr = null;
-                                echo "<META HTTP-EQUIV='REFRESH' CONTENT=\"2;
-                                    URL='cadastroProduto.php'\">";
-                            }
-                        }
-                        
-                        if (isset($_POST['excluir'])) {
-                            if ($pr != null) {
-                                $id = $_POST['ide'];
-                                
-                                $pc = new ProdutoController();
-                                unset($_POST['excluir']);
-                                $msg = $pc->excluirProduto($id);
-                                echo $msg->getMsg();
-                                echo "<META HTTP-EQUIV='REFRESH' CONTENT=\"2;
-                                    URL='cadastroProduto.php'\">";
-                            }
-                        }
-                        
-                        if (isset($_POST['excluirProduto'])) {
-                            if ($pr != null) {
-                                $id = $_POST['idproduto'];
-                                unset($_POST['excluirProduto']);
-                                $pc = new ProdutoController();
-                                $msg = $pc->excluirProduto($id);
-                                echo $msg->getMsg();
-                                echo "<META HTTP-EQUIV='REFRESH' CONTENT=\"2;
-                                    URL='cadastroProduto.php'\">";
-                            }
-                        }
+    $nomeProduto = trim($_POST['nomeProduto']);
+    if ($nomeProduto != "") {
+      $categoria = $_POST['categoria'];
+      $cor = $_POST['cor'];
+      $tamanho = $_POST['tamanho'];
+      $vlrCompra = $_POST['vlrcompra'];
+      $vlrVenda = $_POST['vlrvenda'];
+      $qtdEstoque = $_POST['quantidade'];
+      $lote = $_POST['lote'];
+      $dtCompra = $_POST['dtcompra'];
+      $FkFornecedor = $_POST['FkFornecedor'];
+      $FkMarca = $_POST['FkMarca'];
 
-                        if (isset($_POST['limpar'])) {
-                            $pr = null;
-                            unset($_GET['id']);
-                            header("Location: cadastroProduto.php");
-                        }
-                        if (isset($_GET['id'])) {
-                            $btEnviar = TRUE;
-                            $btAtualizar = TRUE;
-                            $btExcluir = TRUE;
-                            $id = $_GET['id'];
-                            $pc = new ProdutoController();
-                            $pr = $pc->pesquisarProdutoId($id);
-                        }
-                        ?>
-                        <form method="post" action="" enctype="multipart/form-data">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <strong>Código: <label style="color:red;">
-                                            <?php
-                                            if ($pr != null) {
-                                                echo $pr->getIdProduto();
-                                                ?>
-                                            </label></strong>
-                                        <input type="hidden" name="idproduto" 
-                                               value="<?php echo $pr->getIdProduto(); ?>">
-                                        <br>
-                                        
-                                               <?php
-                                           }
-                                           ?>  
+      $pc = new ProdutoController();
+      unset($_POST['cadastrarProduto']);
+      $msg = $pc->inserirProduto(
+        $categoria,
+        $nomeProduto,
+        $cor,
+        $tamanho,
+        $vlrCompra,
+        $vlrVenda,
+        $qtdEstoque,
+        $lote,
+        $dtCompra,
+        $FkFornecedor,
+        $FkMarca
+      );
 
-            <label>Nome do produto</label>
-            <input type="text" class="form-control" name="nomeproduto" placeholder="Insira o nome do produto" autocomplete="off"value="<?php echo $pr->getNomeProduto(); ?>">
-            <label>Cor</label>
-            <input type="text" class="form-control" name="cor" placeholder="Insira a cor do produto" autocomplete="off" value="<?php echo $pr->getCor(); ?>">
-            <label>Tamanho</label>
-            <input type="number" class="form-control" name="tamanho" placeholder="Insira o tamanho do produto" autocomplete="off"value="<?php echo $pr->getTamanho(); ?>">
-            <label>Quantidade</label>
-            <input type="number" class="form-control"  name="quantidade" placeholder="Insira a quantidade do produto" autocomplete="off" value="<?php echo $pr->getQtdEstoque(); ?>">
-          </div>
-          <div class="col-md-6">
-            <label>Valor da Compra</label>
-            <input type="number" class="form-control"   name="vlrcompra" placeholder="Insira o valor da compra" autocomplete="off" value="<?php echo $pr->getVlrCompra(); ?>">
-            <label>Valor da Venda</label>
-            <input type="number" class="form-control"   name="vlrvenda" placeholder="Insira o valor da venda" autocomplete="off"value="<?php echo $pr->getVlrVenda(); ?>">
-            <label>Lote</label>
-            <input type="text" class="form-control"  name="lote" placeholder="Insira o lote" autocomplete="off"value="<?php echo $pr->getLote(); ?>">
-            <label>Data da Compra</label>
-            <input type="date" class="form-control" name="dtcompra" placeholder="Insira a data da compra" autocomplete="off" value="<?php echo $pr->getDtCompra(); ?>">
-          </div>
-        </div>
-      </div>
-      <div class="form-group">
-        </select>
-      </div>
-      <div class="form-group">
-        <label>Marca</label>
-        <select class="form-control" name="marca" placeholder="Escolha a marca" autocomplete="off"value="<?php echo $pr->getFkMarca(); ?>">
-        </select>
-        <div class="form-group">
-          <label>Fornecedor</label>
-          <select class="form-control" name="fornecedor"value="<?php echo $pr->getFkFornecedor(); ?>">
+      echo $msg->getMsg();
+      echo "<META HTTP-EQUIV='REFRESH' CONTENT=\"2;
+                                    URL='cadastroProduto.php'\">";
+    }
+  }
 
-          </select>
-        </div>
+  //método para atualizar dados do produto no BD
+  if (isset($_POST['atualizarProduto'])) {
+    $nomeProduto = trim($_POST['nomeProduto']);
+    if ($nomeProduto != "") {
+      $idProduto = $_POST['idproduto'];
+      $categoria = $_POST['categoria'];
+      $cor = $_POST['cor'];
+      $tamanho = $_POST['tamanho'];
+      $vlrCompra = $_POST['vlrcompra'];
+      $vlrVenda = $_POST['vlrvenda'];
+      $qtdEstoque = $_POST['quantidade'];
+      $lote = $_POST['lote'];
+      $dtCompra = $_POST['dtcompra'];
+      $FkFornecedor = $_POST['FkFornecedor'];
+      $FkMarca = $_POST['marca'];
+
+      $pc = new ProdutoController();
+      unset($_POST['atualizarProduto']);
+      $msg = $pc->atualizarProduto(
+        $idProduto,
+        $categoria,
+        $nomeProduto,
+        $cor,
+        $tamanho,
+        $vlrCompra,
+        $vlrVenda,
+        $qtdEstoque,
+        $lote,
+        $dtCompra,
+        $FkFornecedor,
+        $FkMarca
+      );
+      echo $msg->getMsg();
+      $pr = null;
+      echo "<META HTTP-EQUIV='REFRESH' CONTENT=\"2;
+                                    URL='cadastroProduto.php'\">";
+    }
+  }
+
+  if (isset($_POST['excluir'])) {
+    if ($pr != null) {
+      $id = $_POST['ide'];
+
+      $pc = new ProdutoController();
+      unset($_POST['excluir']);
+      $msg = $pc->excluirProduto($id);
+      echo $msg->getMsg();
+      echo "<META HTTP-EQUIV='REFRESH' CONTENT=\"2;
+                                    URL='cadastroProduto.php'\">";
+    }
+  }
+
+  if (isset($_POST['excluirProduto'])) {
+    if ($pr != null) {
+      $id = $_POST['idproduto'];
+      unset($_POST['excluirProduto']);
+      $pc = new ProdutoController();
+      $msg = $pc->excluirProduto($id);
+      echo $msg->getMsg();
+      echo "<META HTTP-EQUIV='REFRESH' CONTENT=\"2;
+                                    URL='cadastroProduto.php'\">";
+    }
+  }
+
+  if (isset($_POST['limpar'])) {
+    $pr = null;
+    unset($_GET['id']);
+    header("Location: cadastroProduto.php");
+  }
+  if (isset($_GET['id'])) {
+    $btEnviar = TRUE;
+    $btAtualizar = TRUE;
+    $btExcluir = TRUE;
+    $id = $_GET['id'];
+    $pc = new ProdutoController();
+    $pr = $pc->pesquisarProdutoId($id);
+  }
+  ?>
+  <form method="post" action="" enctype="multipart/form-data">
+    <div class="row">
+      <div class="col-md-12">
+        <strong>Código: <label style="color:red;">
+            <?php
+            if ($pr != null) {
+              echo $pr->getIdProduto();
+            ?>
+          </label></strong>
+        <input type="hidden" name="idproduto" value="<?php echo $pr->getIdProduto(); ?>">
         <br>
-        <div style="text-align: center;">
-          <a href="#" role="button" class="btn btn-primary btn-sm">Voltar ao menu</a>
-          <button type="submit" id="botao" class="btn btn-success btn-sm">Cadastrar</button>
+  </form>
+
+<?php
+            }
+?>
+<div class="container" style="margin-top: 40px" id="container">
+
+  <h3>Cadastro de produto</h3>
+
+  <form action="cadastroProduto.php" method="post" style="margin-top: 20px">
+    <div class="form-group">
+      <div class="row">
+        <div class="col-md-6">
+
+          <label>Nome do produto</label>
+          <input type="text" class="form-control" name="nomeproduto" placeholder="Insira o nome do produto" autocomplete="off" value="<?php echo $pr->getNomeProduto(); ?>">
+          <label>Cor</label>
+          <input type="text" class="form-control" name="cor" placeholder="Insira a cor do produto" autocomplete="off" value="<?php echo $pr->getCor(); ?>">
+          <label>Tamanho</label>
+          <input type="number" class="form-control" name="tamanho" placeholder="Insira o tamanho do produto" autocomplete="off" value="<?php echo $pr->getTamanho(); ?>">
+          <label>Quantidade</label>
+          <input type="number" class="form-control" name="quantidade" placeholder="Insira a quantidade do produto" autocomplete="off" value="<?php echo $pr->getQtdEstoque(); ?>">
         </div>
-    </form>
-  </div>
+        <div class="col-md-6">
+          <label>Valor da Compra</label>
+          <input type="number" class="form-control" name="vlrcompra" placeholder="Insira o valor da compra" autocomplete="off" value="<?php echo $pr->getVlrCompra(); ?>">
+          <label>Valor da Venda</label>
+          <input type="number" class="form-control" name="vlrvenda" placeholder="Insira o valor da venda" autocomplete="off" value="<?php echo $pr->getVlrVenda(); ?>">
+          <label>Lote</label>
+          <input type="text" class="form-control" name="lote" placeholder="Insira o lote" autocomplete="off" value="<?php echo $pr->getLote(); ?>">
+          <label>Data da Compra</label>
+          <input type="date" class="form-control" name="dtcompra" placeholder="Insira a data da compra" autocomplete="off" value="<?php echo $pr->getDtCompra(); ?>">
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Marca</label> <label style="color: red; font-size: 11px;" id="respMarca"></label>
+      <select class="form-control" id="FKMarca" onblur="return selectMarca();" name="FkMarca" placeholder="Escolha a marca">
+        <option value="-1">[--SELECIONE--]</option>
+      <?php
+        $mc = new MarcaController();
+        $lpr = $mc->listarMarcas();
+        foreach ($lpr as $m){
+      ?>
+      
+            <option 
+              <?php 
+              if($pr->getFkMarca()->getIdMarca() != null){
+                if($pr->getFkMarca()->getIdMarca == $m->getIdMarca()) echo "selected = 'selected'";
+              }?>
+            value="<?php echo $m->getIdMarca(); ?>"><?php echo $m->getNomeMarca(); ?></option>
+      <?php
+        }
+      ?>
+      </select>
+      <div class="form-group">
+        <label>Fornecedor</label>
+        <select class="form-control" name="FkFornecedor" >
+          <option value="<?php echo $pr->getFkFornecedor()->getIdFornecedor(); ?>"><?php echo $pr->getFkFornecedor()->getNomeFornecedor(); ?></option>
+        </select>
+      </div>
+      <br>
+      <div style="text-align: center;">
+        <a href="#" role="button" class="btn btn-primary btn-sm">Voltar ao menu</a>
+        <button type="submit" id="botao" class="btn btn-success btn-sm">Cadastrar</button>
+      </div>
+  </form>
+</div>
 
-  <script src="js/bootstrap.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script>
+  function selectMarca(){
+    var fkMarca = document.getElementById('FKMarca').value;
 
+    if(fkMarca == -1){
+      document.getElementById("respMarca").innerHTML = " * Selecione a marca";
+      return false;
+    }else{
+      document.getElementById("respMarca").innerHTML = "";
+    }
+  }
+</script>
 </body>
 
 </html>
