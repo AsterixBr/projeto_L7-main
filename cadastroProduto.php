@@ -40,7 +40,11 @@ $btExcluir = FALSE;
 
 </head>
 <header style="color: white;">
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark ml-5">
+  
+</header>
+
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark ml-5">
     <div class="container-fluid">
       <a href="#" class="navbar-brand">L7 Grifes</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="true" aria-label="Toggle navigation">
@@ -70,27 +74,22 @@ $btExcluir = FALSE;
       </div>
     </div>
   </nav>
-</header>
-
-<body>
-
   <?php
   //envio dos dados para o BD
-  if (isset($_POST['cadastrarProduto
-                        '])) {
+  if (isset($_POST['cadastrarProduto'])) {
     $nomeProduto = trim($_POST['nomeProduto']);
     if ($nomeProduto != "") {
       $categoria = $_POST['categoria'];
       $cor = $_POST['cor'];
       $tamanho = $_POST['tamanho'];
-      $vlrCompra = $_POST['vlrcompra'];
-      $vlrVenda = $_POST['vlrvenda'];
-      $qtdEstoque = $_POST['quantidade'];
+      $vlrCompra = $_POST['vlrCompra'];
+      $vlrVenda = $_POST['vlrVenda'];
+      $qtdEstoque = $_POST['qtdEstoque'];
       $lote = $_POST['lote'];
-      $dtCompra = $_POST['dtcompra'];
+      $dtCompra = $_POST['dtCompra'];
       $FkFornecedor = $_POST['FkFornecedor'];
       $FkMarca = $_POST['FkMarca'];
-
+      //$msg->setMsg("$categoria,$nomeProduto, $cor, $tamanho, $vlrCompra, $vlrVenda, $qtdEstoque, $lote, $dtCompra, $FkFornecedor, $FkMarca");
       $pc = new ProdutoController();
       unset($_POST['cadastrarProduto']);
       $msg = $pc->inserirProduto(
@@ -117,15 +116,15 @@ $btExcluir = FALSE;
   if (isset($_POST['atualizarProduto'])) {
     $nomeProduto = trim($_POST['nomeProduto']);
     if ($nomeProduto != "") {
-      $idProduto = $_POST['idproduto'];
+      $idProduto = $_POST['idProduto'];
       $categoria = $_POST['categoria'];
       $cor = $_POST['cor'];
       $tamanho = $_POST['tamanho'];
-      $vlrCompra = $_POST['vlrcompra'];
-      $vlrVenda = $_POST['vlrvenda'];
-      $qtdEstoque = $_POST['quantidade'];
+      $vlrCompra = $_POST['vlrCompra'];
+      $vlrVenda = $_POST['vlrVenda'];
+      $qtdEstoque = $_POST['qtdEstoque'];
       $lote = $_POST['lote'];
-      $dtCompra = $_POST['dtcompra'];
+      $dtCompra = $_POST['dtCompra'];
       $FkFornecedor = $_POST['FkFornecedor'];
       $FkMarca = $_POST['FkMarca'];
       $pc = new ProdutoController();
@@ -191,15 +190,15 @@ $btExcluir = FALSE;
   }
   ?>
   <form method="post" action="" enctype="multipart/form-data">
-    <div class="form-group">
-      <div class="col-md-6">
+    <div class="row">
+      <div class="col-md-12">
         <strong>Código: <label style="color:red;">
             <?php
             if ($pr != null) {
               echo $pr->getIdProduto();
             ?>
           </label></strong>
-        <input type="hidden" name="idproduto" value="<?php echo $pr->getIdProduto(); ?>">
+        <input type="hidden" name="idProduto" value="<?php echo $pr->getIdProduto(); ?>">
         <br>
   </form>
 
@@ -214,25 +213,26 @@ $btExcluir = FALSE;
     <div class="form-group">
       <div class="row">
         <div class="col-md-6">
-
+        <label>Categoria</label>
+        <input type="text" class="form-control" name="categoria" placeholder="Insira o nome do produto"  value="<?php echo $pr->getCategoria(); ?>">
           <label>Produto</label>
-          <input type="text" class="form-control" name="nomeproduto" placeholder="Insira o nome do produto" autocomplete="off" value="<?php echo $pr->getNomeProduto(); ?>">
+          <input type="text" class="form-control" name="nomeProduto" placeholder="Insira o nome do produto"  value="<?php echo $pr->getNomeProduto(); ?>">
           <label>Cor</label>
-          <input type="text" class="form-control" name="cor" placeholder="Insira a cor do produto" autocomplete="off" value="<?php echo $pr->getCor(); ?>">
+          <input type="text" class="form-control" name="cor" placeholder="Insira a cor do produto"  value="<?php echo $pr->getCor(); ?>">
           <label>Tamanho</label>
-          <input type="number" class="form-control" name="tamanho" placeholder="Insira o tamanho do produto" autocomplete="off" value="<?php echo $pr->getTamanho(); ?>">
+          <input type="text" class="form-control" name="tamanho" placeholder="Insira o tamanho do produto"  value="<?php echo $pr->getTamanho(); ?>">
           <label>Quantidade</label>
-          <input type="number" class="form-control" name="quantidade" placeholder="Insira a quantidade do produto" autocomplete="off" value="<?php echo $pr->getQtdEstoque(); ?>">
+          <input type="number" class="form-control" name="qtdEstoque" placeholder="Insira a quantidade do produto"  value="<?php echo $pr->getQtdEstoque(); ?>">
         </div>
         <div class="col-md-6">
           <label>Valor da Compra</label>
-          <input type="number" class="form-control" name="vlrcompra" placeholder="Insira o valor da compra" autocomplete="off" value="<?php echo $pr->getVlrCompra(); ?>">
+          <input type="text" class="form-control" name="vlrCompra" placeholder="Insira o valor da compra"  value="<?php echo $pr->getVlrCompra(); ?>">
           <label>Valor da Venda</label>
-          <input type="number" class="form-control" name="vlrvenda" placeholder="Insira o valor da venda" autocomplete="off" value="<?php echo $pr->getVlrVenda(); ?>">
+          <input type="text" class="form-control" name="vlrVenda" placeholder="Insira o valor da venda"  value="<?php echo $pr->getVlrVenda(); ?>">
           <label>Lote</label>
-          <input type="text" class="form-control" name="lote" placeholder="Insira o lote" autocomplete="off" value="<?php echo $pr->getLote(); ?>">
+          <input type="text" class="form-control" name="lote" placeholder="Insira o lote"  value="<?php echo $pr->getLote(); ?>">
           <label>Data da Compra</label>
-          <input type="date" class="form-control" name="dtcompra" placeholder="Insira a data da compra" autocomplete="off" value="<?php echo $pr->getDtCompra(); ?>">
+          <input type="date" class="form-control" name="dtCompra" placeholder="Insira a data da compra" value="<?php echo $pr->getDtCompra(); ?>">
         </div>
       </div>
     </div>
@@ -277,7 +277,7 @@ $btExcluir = FALSE;
         </select>
       </div>
       <br>
-      <input type="submit" name="cadastrarPproduto" class="btn btn-success btInput" value="Enviar" <?php if ($btEnviar == TRUE) echo "disabled"; ?>>
+      <input type="submit" name="cadastrarProduto" class="btn btn-success btInput" value="Enviar" <?php if ($btEnviar == TRUE) echo "disabled"; ?>>
                             <input type="submit" name="atualizarProduto" class="btn btn-secondary btInput" value="Atualizar" <?php if ($btAtualizar == FALSE) echo "disabled"; ?>>
                             <button type="button" class="btn btn-warning btInput" data-bs-toggle="modal" data-bs-target="#exampleModal" 
                             <?php if ($btExcluir == FALSE) echo "disabled"; ?>>
@@ -332,10 +332,10 @@ $btExcluir = FALSE;
                         <tbody>
                             <?php
                             $fcTable = new ProdutoController();
-                            $$listarProdutos = $fcTable->listarProdutos();
+                            $listarProdutos = $fcTable->listarProdutos();
                             $a = 0;
-                            if ($$listarProdutos != null) {
-                                foreach ($$listarProdutos as $lf) {
+                            if ($listarProdutos != null) {
+                                foreach ($listarProdutos as $lf) {
                                     $a++;
                             ?>
                                     <tr>
@@ -349,8 +349,8 @@ $btExcluir = FALSE;
                                         <td><?php print_r($lf->getQtdEstoque()); ?></td>
                                         <td><?php print_r($lf->getLote()); ?></td>
                                         <td><?php print_r($lf->getDtCompra()); ?></td>
-                                        <td><?php print_r($lf->getFkMarca()); ?></td>
-                                        <td><?php print_r($lf->getFkFornecedor()); ?></td>
+                                        <td><?php print_r($lf->getFkMarca()->getNomeMarca()); ?></td>
+                                        <td><?php print_r($lf->getFkFornecedor()->getNomeFornecedor()); ?></td>
                                         <td><a href="cadastroProduto.php?id=<?php echo $lf->getIdProduto(); ?>" class="btn btn-light">
                                                 Editar</a>
                                             </form>

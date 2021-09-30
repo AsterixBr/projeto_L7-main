@@ -13,7 +13,7 @@ class ProdutoController {
         $produto->settamanho($tamanho);
         $produto->setvlrCompra($vlrCompra);
         $produto->setvlrVenda($vlrVenda);
-        $produto->setqtdEstoque($$qtdEstoque);
+        $produto->setqtdEstoque($qtdEstoque);
         $produto->setlote($lote);
         $produto->setDtCompra($dtCompra);
         $produto->setFkFornecedor($FkFornecedor);
@@ -36,7 +36,7 @@ class ProdutoController {
         $produto->settamanho($tamanho);
         $produto->setvlrCompra($vlrCompra);
         $produto->setvlrVenda($vlrVenda);
-        $produto->setqtdEstoque($$qtdEstoque);
+        $produto->setqtdEstoque($qtdEstoque);
         $produto->setlote($lote);
         $produto->setDtCompra($dtCompra);
         $produto->setFkFornecedor($FkFornecedor);
