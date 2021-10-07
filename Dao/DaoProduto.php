@@ -77,21 +77,24 @@ class DaoProduto
             $dtCompra = $produto->getDtCompra();
             $FkFornecedor = $produto->getFkFornecedor();
             $FkMarca = $produto->getFkMarca();
+            $msg->setMsg("$id, $categoria, $nomeProduto , $cor, $tamanho, $vlrCompra, 
+            $vlrVenda, $qtdEstoque, $lote, $dtCompra, $FkFornecedor, $FkMarca");
+            /*
             try {
                 $conecta->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 $stmt = $conecta->prepare("update produto set "
                     . "categoria = ?,"
-                    . "nomeProduto= ?;"
-                    . "cor = ?;"
-                    . "tamanho = ?;"
+                    . "nomeProduto = ?, "
+                    . "cor = ?,"
+                    . "tamanho = ?, "
                     . "vlrCompra = ?,"
                     . "vlrVenda = ?, "
                     . "qtdEstoque = ?, "
-                    . "lote = ?;"
-                    . "dtCompra = ?;"
-                    . "FkFornecedor = ?; "
+                    . "lote = ?,"
+                    . "dtCompra = ?,"
+                    . "FkFornecedor = ?, "
                     . "FkMarca = ?"
-                    . "where idproduto = ?");
+                    . "where idproduto = ? ");
                 $stmt->bindParam(1, $categoria);
                 $stmt->bindParam(2, $nomeProduto);
                 $stmt->bindParam(3, $cor);
@@ -109,7 +112,7 @@ class DaoProduto
                     . "Dados atualizados com sucesso</p>");
             } catch (PDOException $ex) {
                 $msg->setMsg(var_dump($ex->errorInfo));
-            }
+            }*/
         } else {
             $msg->setMsg("<p style='color: red;'>"
                 . "Erro na conexão com o banco de dados.</p>");
@@ -127,7 +130,7 @@ class DaoProduto
         if ($conecta) {
             try {
                 $conecta->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                $rs = $conecta->query("SELECT * from produto inner join fornecedor 
+                $rs = $conecta->query("select * from produto inner join fornecedor 
                     on produto.FkFornecedor = fornecedor.idFornecedor
                     inner join marca on produto.FkMarca = marca.idMarca
                     order by produto.idproduto asc");
@@ -150,28 +153,14 @@ class DaoProduto
                             $produto->setDtCompra($linha->dtCompra);
 
                             $forn = new Fornecedor();
-                            $forn->setIdfornecedor($linha->idFornecedor);
                             $forn->setNomeFornecedor($linha->nomeFornecedor);
-                            $forn->setEmail($linha->email);
-                            $forn->setTellFixo($linha->tellFixo);
-                            $forn->setcell($linha->cell);
-                            $forn->setCep($linha->cep);
-                            $forn->setLogradouro($linha->logradouro);
-                            $forn->setUf($linha->uf);
-                            $forn->setBairro($linha->bairro);
-                            $forn->setCidade($linha->cidade);
-                            $forn->setComplemento($linha->complemento);
-                            $forn->setRepresentante($linha->representante);
                             $produto->setFkFornecedor($forn);
 
                             $lista[$a] = $produto;
                             $a++;
 
                             $marca = new Marca();
-                            $marca->setIdMarca($linha->idMarca);
                             $marca->setNomeMarca($linha->nomeMarca);
-                            $marca->setRepresentante($linha->representante);
-                            $marca->setEmailRepresentante($linha->emailRepresentante);
                             $produto->setFkMarca($marca);
 
                             $lista2[$b] = $produto;
@@ -223,13 +212,13 @@ class DaoProduto
         if ($conecta) {
             try {
                 $conecta->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-                $rs = $conecta->prepare("select * from produto where "
+                $rs = $conecta->prepare("select * from fornecedor  inner join produto on FkFornecedor=idFornecedor inner join marca on FkMarca=idMarca where "
                 . "idProduto = ?");
                 $rs->bindParam(1, $id);
                 if ($rs->execute()) {
                     if ($rs->rowCount() > 0) {
                         while ($linha = $rs->fetch(PDO::FETCH_OBJ)) {
-                            $produto->setIdProduto($linha->idproduto);
+                            //$produto->setIdProduto($linha->idproduto);
                             $produto->setCategoria($linha->categoria);
                             $produto->setNomeProduto($linha->nomeProduto);
                             $produto->setCor($linha->cor);
@@ -243,23 +232,11 @@ class DaoProduto
                             $forn = new Fornecedor();
                             $forn->setIdfornecedor($linha->idFornecedor);
                             $forn->setNomeFornecedor($linha->nomeFornecedor);
-                            $forn->setEmail($linha->email);
-                            $forn->setTellFixo($linha->tellFixo);
-                            $forn->setcell($linha->cell);
-                            $forn->setCep($linha->cep);
-                            $forn->setLogradouro($linha->logradouro);
-                            $forn->setUf($linha->uf);
-                            $forn->setBairro($linha->bairro);
-                            $forn->setCidade($linha->cidade);
-                            $forn->setComplemento($linha->complemento);
-                            $forn->setRepresentante($linha->representante);
                             $produto->setFkFornecedor($forn);
 
                             $marca = new Marca();
-                            $marca->setIdMarca($linha->idMarca);
-                            $marca->setNomeMarca($linha->nomeMarca);
-                            $marca->setRepresentante($linha->representante);
-                            $marca->setEmailRepresentante($linha->emailRepresentante);
+                           $marca->setIdMarca($linha->idMarca);
+                           $marca->setNomeMarca($linha->nomeMarca);
                             $produto->setFkMarca($marca);
 
                           
