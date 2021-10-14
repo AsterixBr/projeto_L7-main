@@ -77,9 +77,9 @@ class DaoProduto
             $dtCompra = $produto->getDtCompra();
             $FkFornecedor = $produto->getFkFornecedor();
             $FkMarca = $produto->getFkMarca();
-            $msg->setMsg("$id, $categoria, $nomeProduto , $cor, $tamanho, $vlrCompra, 
-            $vlrVenda, $qtdEstoque, $lote, $dtCompra, $FkFornecedor, $FkMarca");
-            /*
+           // $msg->setMsg("$id, $categoria, $nomeProduto , $cor, $tamanho, $vlrCompra, 
+            //$vlrVenda, $qtdEstoque, $lote, $dtCompra, $FkFornecedor, $FkMarca");
+        
             try {
                 $conecta->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 $stmt = $conecta->prepare("update produto set "
@@ -112,7 +112,7 @@ class DaoProduto
                     . "Dados atualizados com sucesso</p>");
             } catch (PDOException $ex) {
                 $msg->setMsg(var_dump($ex->errorInfo));
-            }*/
+            }
         } else {
             $msg->setMsg("<p style='color: red;'>"
                 . "Erro na conexão com o banco de dados.</p>");
@@ -218,7 +218,7 @@ class DaoProduto
                 if ($rs->execute()) {
                     if ($rs->rowCount() > 0) {
                         while ($linha = $rs->fetch(PDO::FETCH_OBJ)) {
-                            //$produto->setIdProduto($linha->idproduto);
+                            $produto->setIdProduto($linha->idProduto);
                             $produto->setCategoria($linha->categoria);
                             $produto->setNomeProduto($linha->nomeProduto);
                             $produto->setCor($linha->cor);

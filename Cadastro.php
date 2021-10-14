@@ -58,30 +58,104 @@
                 <div class="card-header bg-light text-center border" style="padding-bottom: 15px; padding-top: 15px;">
                     Cadastro de Cliente
                 </div>
-                <?php
-                //envio dos dados para o BD
-                if (isset($_POST['cadastrar'])) {
-                    $nome = $_POST['nome'];
-                    $dtNasc = $_POST['dtNasc'];
-                    $login = $_POST['login'];
-                    $senha = $_POST['senha'];
-                    $perfil = $_POST['perfil'];
-                    $cpf = $_POST['cpf'];
-                    $email = $_POST['email'];
+                <div class="card-body border">
+                        <?php
+                        //envio dos dados para o BD
+                        if (isset($_POST['cadastrarPessoa'])) {
+                            $nomePessoa = trim($_POST['nomePessoa']);
+                            if ($nomePessoa != "") {
+                                $logradouro = $_POST['logradouro'];
+                                $complemento = $_POST['complemento'];
+                                $bairro = $_POST['bairro'];
+                                $cidade = $_POST['cidade'];
+                                $uf = $_POST['uf'];
+                                $cep = $_POST['cep'];
+                                $dtNasc = $_POST['dtNasc'];
+                                $perfil = $_POST['perfil'];
+                                $email = $_POST['email'];
+                                $login = $_POST['login'];
+                                $senha = $_POST['senha'];
+                                $cpf = $_POST['cpf'];
 
-                    $pc = new PessoaController();
-                    include_once '/controller/PessoaController.php';
-                    echo "<p>" . $pc->inserirPessoa(
-                        $nome,
-                        $dtNasc,
-                        $login,
-                        $senha,
-                        $perfil,
-                        $email,
-                        $cpf
-                    ) . "</p>";
-                }
-                ?>
+                                $fc = new PessoaController();
+                                unset($_POST['cadastrarPessoa']);
+                                $msg = $fc->inserirPessoa($nomePessoa, $logradouro, 
+                                    $complemento, $bairro, $cidade, $uf, $cep,
+                                    $dtNasc, $login, $senha, $perfil, $email, $cpf);
+                                echo $msg->getMsg();
+                                echo "<META HTTP-EQUIV='REFRESH' CONTENT=\"2;
+                                    URL='cadastro.php'\">";
+                            }
+                        }
+                        
+                        //método para atualizar dados do produto no BD
+                        if (isset($_POST['atualizarPessoa'])) {
+                            $nomePessoa = trim($_POST['nomePessoa']);
+                            if ($nomePessoa != "") {
+                                $idpessoa = $_POST['idpessoa'];
+                                $logradouro = $_POST['logradouro'];
+                                $complemento = $_POST['complemento'];
+                                $bairro = $_POST['bairro'];
+                                $cidade = $_POST['cidade'];
+                                $uf = $_POST['uf'];
+                                $cep = $_POST['cep'];
+                                $perfil = $_POST['perfil'];
+                                $dtNasc = $_POST['dtNasc'];
+                                $email = $_POST['email'];
+                                $login = $_POST['login'];
+                                $senha = $_POST['senha'];
+                                $cpf = $_POST['cpf'];
+
+                                $fc = new PessoaController();
+                                unset($_POST['atualizarPessoa']);
+                                $msg = $fc->atualizarPessoa($idpessoa, $nomePessoa, 
+                                    $logradouro, $complemento, $bairro, $cidade, $uf, $cep,
+                                    $dtNasc, $login, $senha, $perfil, $email, $cpf);
+                                echo $msg->getMsg();
+                                /*echo "<META HTTP-EQUIV='REFRESH' CONTENT=\"2;
+                                    URL='cadastro.php'\">";*/
+                            }
+                        }
+                        
+                        if (isset($_POST['excluir'])) {
+                            if ($pe != null) {
+                                $id = $_POST['ide'];
+                                
+                                $fc = new PessoaController();
+                                unset($_POST['excluir']);
+                                $msg = $fc->excluirPessoa($id);
+                                echo $msg->getMsg();
+                                echo "<META HTTP-EQUIV='REFRESH' CONTENT=\"2;
+                                    URL='cadastro.php'\">";
+                            }
+                        }
+                        
+                        if (isset($_POST['excluirPessoa'])) {
+                            if ($pe != null) {
+                                $id = $_POST['idpessoa'];
+                                unset($_POST['excluirPessoa']);
+                                $fc = new PessoaController();
+                                $msg = $fc->excluirPessoa($id);
+                                echo $msg->getMsg();
+                                echo "<META HTTP-EQUIV='REFRESH' CONTENT=\"2;
+                                    URL='cadastro.php'\">";
+                            }
+                        }
+
+                        if (isset($_POST['limpar'])) {
+                            $pe = null;
+                            unset($_GET['id']);
+                            header("Location: cadastro.php");
+                        }
+                        if (isset($_GET['id'])) {
+                            $btEnviar = TRUE;
+                            $btAtualizar = TRUE;
+                            $btExcluir = TRUE;
+                            $id = $_GET['id'];
+                            $fc = new PessoaController();
+                            $pe = $fc->pesquisarPessoaId($id);
+                        }
+                        ?>
                 <div class="card-body border">
                     <form method="post" action="">
                         <div class="row">

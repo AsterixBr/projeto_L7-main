@@ -1,10 +1,10 @@
 <?php
-include_once 'controller/ProdutoController.php';
+include_once './controller/ProdutoController.php';
 include_once './model/Produto.php';
 include_once './model/Fornecedor.php';
 include_once './model/Marca.php';
 include_once './model/Mensagem.php';
-include_once 'controller/FornecedorController.php';
+include_once './controller/FornecedorController.php';
 include_once './controller/MarcaController.php';
 
 $fm = new marcacontroller();
@@ -130,7 +130,7 @@ $btExcluir = FALSE;
               if (isset($_POST['atualizarProduto'])) {
                 $nomeProduto = trim($_POST['nomeProduto']);
                 if ($nomeProduto != "") {
-                  $idProduto = $_POST['idProduto'];
+                  $id = $_POST['idProduto'];
                   $categoria = $_POST['categoria'];
                   $cor = $_POST['cor'];
                   $tamanho = $_POST['tamanho'];
@@ -143,12 +143,12 @@ $btExcluir = FALSE;
                   $FkMarca = $_POST['FkMarca'];
                   $pc = new ProdutoController();
                   unset($_POST['atualizarProduto']);
-                  echo " $id, $categoria, $nomeProduto, $cor, $tamanho, $vlrCompra, $vlrVenda, 
+                  /*echo " $id, $categoria, $nomeProduto, $cor, $tamanho, $vlrCompra, $vlrVenda, 
                     $qtdEstoque, $lote, $dtCompra,  $FkFornecedor, $FkMarca";
-                  /*
-                    $msg = $pc->atualizarProduto($idProduto, $categoria, $nomeProduto, 
+                  */
+                    $msg = $pc->atualizarProduto($id, $categoria, $nomeProduto, 
                       $cor, $tamanho, $vlrCompra, $vlrVenda, $qtdEstoque, $lote, $dtCompra, $FkFornecedor, $FkMarca);
-                    echo $msg->getMsg();*/
+                    echo $msg->getMsg();
                   $pr = null;
                   echo "<META HTTP-EQUIV='REFRESH' CONTENT=\"2;
                                    URL='cadastroProduto.php'\">";
@@ -360,11 +360,11 @@ $btExcluir = FALSE;
                           <div class="modal-body">
                             <form method="post" action="">
                               <label><strong>Deseja excluir o produto
-                                  <?php echo $pr->getNomeProduto(); ?>?</strong></label>
-                              <input type="hidden" name="ide" value="<?php echo $pr->getIdProduto(); ?>">
+                                  <?php echo $lf->getNomeProduto(); ?>?</strong></label>
+                              <input type="hidden" name="ides" value="<?php echo $lf->getIdProduto(); ?>">
                           </div>
                           <div class="modal-footer">
-                            <button type="submit" name="excluirProduto" class="btn btn-primary">Sim</button>
+                            <button type="submit" name="excluir" class="btn btn-primary">Sim</button>
                             <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">Não</button>
                           </div>
                           </form>

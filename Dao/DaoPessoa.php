@@ -1,9 +1,9 @@
 <?php
 
-//require_once 'C:/xampp/htdocs/PHPMatutinoPDO/bd/Conecta.php';
-//require_once 'C:/xampp/htdocs/PHPMatutinoPDO/model/Pessoa.php';
-//require_once 'C:/xampp/htdocs/PHPMatutinoPDO/model/Endereco.php';
-//include_once 'C:/xampp/htdocs/PHPMatutinoPDO/model/Mensagem.php';
+require_once 'C:/xampp/htdocs/projetoL7/Database/Conecta.php';
+require_once 'C:/xampp/htdocs/projetoL7/model/Pessoa.php';
+require_once 'C:/xampp/htdocs/projetoL7/model/Endereco.php';
+include_once 'C:/xampp/htdocs/projetoL7/model/Mensagem.php';
 
 class daoPessoa {
 
@@ -14,8 +14,8 @@ class daoPessoa {
         if($conecta){
 
             $nome = $pessoa->getNome();
-            $dtNasc = $pessoa->getDtNasc();
-            //$login = $pessoa->getLogin();
+            $dtNascimento = $pessoa->getDtNascimento();
+            $login = $pessoa->getLogin();
             $senha = $pessoa->getSenha();
             $perfil = $pessoa->getPerfil();
             $email = $pessoa->getEmail();
