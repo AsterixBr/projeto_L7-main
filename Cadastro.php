@@ -54,34 +54,35 @@
     <div class="container-fluid">
         <div class="row" style="margin-top: 30px;">
             <div class="col-8 offset-2">
-
-                <div class="card-header bg-light text-center border" style="padding-bottom: 15px; padding-top: 15px;">
+            
+                <div class="card-header bg-dark text-center text-white border" style="padding-bottom: 15px; padding-top: 15px;" >
                     Cadastro de Cliente
                 </div>
                 <div class="card-body border">
                         <?php
                         //envio dos dados para o BD
                         if (isset($_POST['cadastrarPessoa'])) {
-                            $nomePessoa = trim($_POST['nomePessoa']);
-                            if ($nomePessoa != "") {
+                            $nome = trim($_POST['nome']);
+                            if ($nome != "") {
+                                $dtNascimento = $_POST['dtNascimento'];
+                                $email = $_POST['email'];
+                                $senha = $_POST['senha'];
+                                $perfil = $_POST['perfil'];
+                                $cpf = $_POST['cpf'];
+                                $FkEndereco = $_POST['FkEndereco'];
+                                $cep = $_POST['cep'];
                                 $logradouro = $_POST['logradouro'];
+                                $numero = $_POST['numero'];
                                 $complemento = $_POST['complemento'];
                                 $bairro = $_POST['bairro'];
                                 $cidade = $_POST['cidade'];
                                 $uf = $_POST['uf'];
-                                $cep = $_POST['cep'];
-                                $dtNasc = $_POST['dtNasc'];
-                                $perfil = $_POST['perfil'];
-                                $email = $_POST['email'];
-                                $login = $_POST['login'];
-                                $senha = $_POST['senha'];
-                                $cpf = $_POST['cpf'];
 
                                 $fc = new PessoaController();
                                 unset($_POST['cadastrarPessoa']);
-                                $msg = $fc->inserirPessoa($nomePessoa, $logradouro, 
-                                    $complemento, $bairro, $cidade, $uf, $cep,
-                                    $dtNasc, $login, $senha, $perfil, $email, $cpf);
+                                $msg = $fc->inserirPessoa($nome, $dtNascimento, 
+                                    $email, $senha, $perfil, $cpf, $FkEndereco,
+                                    $cep, $logradouro, $numero, $complemento, $bairro, $cidade, $uf);
                                 echo $msg->getMsg();
                                 echo "<META HTTP-EQUIV='REFRESH' CONTENT=\"2;
                                     URL='cadastro.php'\">";
@@ -90,27 +91,28 @@
                         
                         //método para atualizar dados do produto no BD
                         if (isset($_POST['atualizarPessoa'])) {
-                            $nomePessoa = trim($_POST['nomePessoa']);
-                            if ($nomePessoa != "") {
-                                $idpessoa = $_POST['idpessoa'];
+                            $nome = trim($_POST['nome']);
+                            if ($nome != "") {
+                                $idpessoa = $_POST['idPessoa'];
+                                $dtNascimento = $_POST['dtNascimento'];
+                                $email = $_POST['email'];
+                                $senha = $_POST['senha'];
+                                $perfil = $_POST['perfil'];
+                                $cpf = $_POST['cpf'];
+                                $FkEndereco = $_POST['FkEndereco'];
+                                $cep = $_POST['cep'];
                                 $logradouro = $_POST['logradouro'];
+                                $numero = $_POST['numero'];
                                 $complemento = $_POST['complemento'];
                                 $bairro = $_POST['bairro'];
                                 $cidade = $_POST['cidade'];
                                 $uf = $_POST['uf'];
-                                $cep = $_POST['cep'];
-                                $perfil = $_POST['perfil'];
-                                $dtNasc = $_POST['dtNasc'];
-                                $email = $_POST['email'];
-                                $login = $_POST['login'];
-                                $senha = $_POST['senha'];
-                                $cpf = $_POST['cpf'];
 
                                 $fc = new PessoaController();
                                 unset($_POST['atualizarPessoa']);
-                                $msg = $fc->atualizarPessoa($idpessoa, $nomePessoa, 
-                                    $logradouro, $complemento, $bairro, $cidade, $uf, $cep,
-                                    $dtNasc, $login, $senha, $perfil, $email, $cpf);
+                                $msg = $fc->atualizarPessoa($idpessoa, $nome, $dtNascimento, 
+                                $email, $senha, $perfil, $cpf, $FkEndereco,
+                                $cep, $logradouro, $numero, $complemento, $bairro, $cidade, $uf);
                                 echo $msg->getMsg();
                                 /*echo "<META HTTP-EQUIV='REFRESH' CONTENT=\"2;
                                     URL='cadastro.php'\">";*/
@@ -156,10 +158,10 @@
                             $pe = $fc->pesquisarPessoaId($id);
                         }
                         ?>
-                <div class="card-body border">
+                <div class="card-header bg-light  border" style="padding-bottom: 15px; padding-top: 15px;" >
                     <form method="post" action="">
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <label>Código: </label> <br>
                                 <label>Nome Completo</label>
                                 <input class="form-control" type="text" name="nome">
@@ -168,8 +170,6 @@
                                 <label>CPF</label>
                                 <label id="valCpf" style="color: red; font-size: 11px;"></label>
                                 <input class="form-control" type="text" id="cpf" onkeypress="mascara(this, '###.###.###-##')" maxlength="14" onblur="return validaCpfCnpj();" name="cpf" required="required">
-                            </div>
-                            <div class="col-md-6">
                                 <br>
                                 <label>E-Mail</label>
                                 <input class="form-control" type="email" name="email">
@@ -177,51 +177,48 @@
                                 <input class="form-control" type="password" name="senha">
                                 <label>Conf. Senha</label>
                                 <input class="form-control" type="password" name="senha2">
-                            </div>
-                        </div>
-                        <br>
-                        <div style="text-align: center;">
-                            <a href="#" role="button" class="btn btn-primary btn-sm">Enviar</a>
-                            <button type="submit" id="botao" class="btn btn-success btn-sm">Limpar</button>
-                        </div>
-                    </form>
-                </div>
-                <div class="card-header bg-dark text-center text-white border" style="padding-bottom: 15px; padding-top: 15px;">
-                                Endereço do cliente
-                            </div>
-                            <div class="col-12 ">
-                                <div class="card-header bg-light text-center text-dark border">
-                                    <div class="row">
-                                        <label>Código: </label> <br>
-                                    </div>
-                                    <div class="row">
-
-                                        <div class="col-md-6 ">
-                                            <label>CEP</label><br>
-                                            <input class="form-control" type="text" id="cep" onkeypress="mascara(this, '#####-###')" maxlength="9" value="" name="cep">
-                                            <label>Logradouro</label>
-                                            <input type="text" class="form-control" name="logradouro" id="rua" value="">
-                                            <label>Complemento</label>
-                                            <input type="text" class="form-control" name="complemento" id="complemento">
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label>Bairro</label>
-                                            <input type="text" class="form-control" name="bairro" id="bairro" value="">
-                                            <label>Cidade</label>
-                                            <input type="text" class="form-control" name="cidade" id="cidade" value="">
-                                            <label>UF</label>
-                                            <input type="text" class="form-control" name="uf" id="uf" value="" maxlength="100">
+                                <label>CEP</label><br>
+                                <input class="form-control" type="text" id="cep" onkeypress="mascara(this, '#####-###')" maxlength="9" value="" name="cep">
+                                <label>Logradouro</label>
+                                <input type="text" class="form-control" name="logradouro" id="rua" value="">
+                                <label>Complemento</label>
+                                <input type="text" class="form-control" name="complemento" id="complemento">
+                                <label>Bairro</label>
+                                <input type="text" class="form-control" name="bairro" id="bairro" value="">
+                                <label>Cidade</label>
+                                <input type="text" class="form-control" name="cidade" id="cidade" value="">
+                                <label>UF</label>
+                                <input type="text" class="form-control" name="uf" id="uf" value="" maxlength="100">
+                                <label>Perfil</label> 
+                                    <label id="valCep" style="color: red; font-size: 11px;"></label>
+                                    <select class="form-select" name="perfil">
+                                        <option>[--Selecione--]</option>
+                                        <option
+                                            <?php
+                                            if($pe->getPerfil() == "Administrador"){
+                                                echo "selected = 'selected'";
+                                            }
+                                            ?>
+                                            >Cliente</option>
+                                        <option
+                                            <?php
+                                            if($pe->getPerfil() == "Funcionário"){
+                                                echo "selected = 'selected'";
+                                            }
+                                            ?>
+                                            >Funcionário</option>
+                                    </select>  
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
                             <div style="text-align: center">
-                                <input type="submit" name="cadastrar" class="btn btn-primary btn-sm" value="Enviar">
+                                <input type="submit" name="cadastrar" class="btn btn-success btInput" value="Enviar">
                                 &nbsp;&nbsp;
-                                <input type="reset" class="btn btn-light btn-sm" value="Limpar">
+                                <input type="reset" class="btn btn-light btInput" value="Limpar">
                                 &nbsp;&nbsp;
-                                <input type="submit" name="atualizar" class="btn btn-secondary btn-sm" value="Atualizar">
+                                <input type="submit" name="atualizar" class="btn btn-secondary btInput" value="Atualizar">
                             </div>
                         </form>
                     </div>
