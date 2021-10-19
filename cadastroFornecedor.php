@@ -1,5 +1,5 @@
 <?php
-include_once 'C:/xampp\htdocs/ProjetoL7/Controller/FornecedorController.php';
+include_once 'C:/xampp/htdocs/ProjetoL7/Controller/FornecedorController.php';
 include_once 'C:/xampp/htdocs/ProjetoL7/model/Fornecedor.php';
 include_once 'C:/xampp/htdocs/ProjetoL7/model/Mensagem.php';
 $msg = new Mensagem();

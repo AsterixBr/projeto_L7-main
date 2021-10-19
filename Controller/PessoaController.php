@@ -1,6 +1,6 @@
 <?php
-include_once './dao/DaoPessoa.php';
-include_once '.model/Pessoa.php';
+include_once 'C:/xampp/htdocs/projetoL7/Dao/DaoPessoa.php';
+include_once 'C:/xampp/htdocs/projetoL7/model/Pessoa.php';
 
 class PessoaController {
     
@@ -11,7 +11,7 @@ class PessoaController {
         $endereco = new Endereco();
         $endereco->setCep($cep);
         $endereco->setLogradouro($logradouro);
-        $endereco>setNumero($numero);
+        $endereco->setNumero($numero);
         $endereco->setComplemento($complemento);
         $endereco->setBairro($bairro);
         $endereco->setCidade($cidade);

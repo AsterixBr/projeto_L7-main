@@ -27,7 +27,7 @@ class DaoPessoa {
             $senha = $pessoa->getSenha();
             $perfil = $pessoa->getPerfil();
 
-            //$msg->setMsg("$logradouro, $complemento, $cep");
+            $msg->setMsg("$logradouro, $complemento, $cep");
             try {
                 $conecta->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 //processo para pegar o idendereco da tabela endereco, conforme 
@@ -35,17 +35,18 @@ class DaoPessoa {
                 $st = $conecta->prepare("call iCadastroPessoa(
                     ?,?,?,?,?,?,?,?,?,?,?,?,?,@)");
                 $st->bindParam(1, $nome);
-                $st->bindParam(2, $dtNasc);
-                $st->bindParam(3, $senha);
-                $st->bindParam(4, $perfil);
-                $st->bindParam(5, $email);
-                $st->bindParam(6, $cpf);
-                $st->bindParam(7, $cep);
-                $st->bindParam(8, $logradouro);
-                $st->bindParam(9, $complemento);
-                $st->bindParam(10, $bairro);
-                $st->bindParam(11, $cidade);
-                $st->bindParam(12, $uf);
+                $st->bindParam(2, $logradouro);
+                $st->bindParam(3, $numero);
+                $st->bindParam(4, $complemento);
+                $st->bindParam(5, $bairro);
+                $st->bindParam(6, $cidade);
+                $st->bindParam(7, $uf);
+                $st->bindParam(8, $cep);
+                $st->bindParam(9, $cpf);
+                $st->bindParam(10, $dtNascimento);
+                $st->bindParam(11, $email);
+                $st->bindParam(12, $senha);
+                $st->bindParam(13, $perfil);
                 
                 if ($st->execute()) {
                     $linha = $st->fetch(PDO::FETCH_OBJ);
