@@ -25,6 +25,17 @@ $btExcluir = FALSE;
             margin-top: 20px;
         }
     </style>
+            <script>
+            function mascara(t, mask) {
+                var i = t.value.length;
+                var saida = mask.substring(1, 0);
+                var texto = mask.substring(i)
+
+                if (texto.substring(0, 1) != saida) {
+                    t.value += texto.substring(0, 1);
+                }
+            }
+        </script>
 </head>
 
 <body>
@@ -213,7 +224,7 @@ $btExcluir = FALSE;
                             <label>Nome Completo</label>
                             <input class="form-control" type="text" name="nome" value="<?php echo $pe->getNome(); ?>">
                             <label>Data de Nascimento</label>
-                            <input class="form-control" type="date" name="dtNasc" value="<?php echo $pe->getdtNascimento(); ?>">
+                            <input class="form-control" type="date" name="dtNascimento" value="<?php echo $pe->getdtNascimento(); ?>">
                             <label>CPF</label>
                             <label id="valCpf" style="color: red; font-size: 11px;"></label>
                             <input class="form-control" type="text" id="cpf" onkeypress="mascara(this, '###.###.###-##')" maxlength="14" onblur="return validaCpfCnpj();" name="cpf" required="required">
@@ -227,8 +238,11 @@ $btExcluir = FALSE;
                             <input class="form-control" type="text" id="cep" onkeypress="mascara(this, '#####-###')" maxlength="9" value="<?php echo $pe->getFkendereco()->getCep(); ?>" name="cep">
                             <label>Logradouro</label>
                             <input type="text" class="form-control" name="logradouro" id="rua" value="<?php echo $pe->getFkEndereco()->getLogradouro(); ?>">
+                            <label>Numero</label>
+                            <input type="text" class="form-control" name="numero" id="numero" value="<?php echo $pe->getFkEndereco()->getNumero(); ?>">
                             <label>Complemento</label>
                             <input type="text" class="form-control" name="complemento" id="complemento" value="<?php echo $pe->getFkEndereco()->getComplemento(); ?>">
+                            
                             <label>Bairro</label>
                             <input type="text" class="form-control" name="bairro" id="bairro" value="<?php echo $pe->getFkEndereco()->getBairro(); ?>">
                             <label>Cidade</label>
@@ -264,26 +278,26 @@ $btExcluir = FALSE;
                                 </div>
 
 
-                                 <!-- Modal para excluir -->
-                                    <div class="modal fade" id="ModalExcluir" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">
-                                                        Confirmar Exclusão</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <h5>Deseja Excluir?</h5>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <input type="submit" name="excluirPessoa" class="btn btn-success " value="Sim">
-                                                    <input type="submit" class="btn btn-light btInput" name="limpar" value="Não">
-                                                </div>
+                                <!-- Modal para excluir -->
+                                <div class="modal fade" id="ModalExcluir" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">
+                                                    Confirmar Exclusão</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <h5>Deseja Excluir?</h5>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <input type="submit" name="excluirPessoa" class="btn btn-success " value="Sim">
+                                                <input type="submit" class="btn btn-light btInput" name="limpar" value="Não">
                                             </div>
                                         </div>
                                     </div>
+                                </div>
 
                             </div>
                         </div>
@@ -372,28 +386,80 @@ $btExcluir = FALSE;
         </div>
         <script src="js/bootstrap.js"></script>
         <script src="js/bootstrap.min.js"></script>
+        <script src="js/jQuery.js"></script>
+        <script src="js/jQuery.min.js"></script>
         <script>
-            function apenasNumeros(string) {
-                var numsStr = string.replace(/[^0-9]/g, '');
-                return parseInt(numsStr);
-            }
+            var myModal = document.getElementById('myModal')
+            var myInput = document.getElementById('myInput')
 
-            function mascara(t, mask) {
-                var i = t.value.length;
-                var saida = mask.substring(1, 0);
-                var texto = mask.substring(i);
-                var n = texto.substring(0, 1);
-                var n = n.replace(/[a-zA-z]/, '');
-                n = parseInt(n);
-                if (isNaN(n)) {
-                    if (texto.substring(0, 1) !== saida) {
-                        t.value += texto.substring(0, 1);
-                    }
-                } else {
-                    t.value = "";
-                    document.getElementById("cpf").value = "";
+            myModal.addEventListener('shown.bs.modal', function() {
+                myInput.focus()
+            })
+        </script>
+        <!-- controle de endereço (ViaCep) -->
+        <script>
+            $(document).ready(function() {
+
+                function limpa_formulário_cep() {
+                    // Limpa valores do formulário de cep.
+                    $("#rua").val("");
+                    $("#bairro").val("");
+                    $("#cidade").val("");
+                    $("#uf").val("");
+                    $("#cepErro").val("");
                 }
-            }
+
+                //Quando o campo cep perde o foco.
+                $("#cep").blur(function() {
+
+                    //Nova variável "cep" somente com dígitos.
+                    var cep = $(this).val().replace(/\D/g, '');
+
+                    //Verifica se campo cep possui valor informado.
+                    if (cep != "") {
+
+                        //Expressão regular para validar o CEP.
+                        var validacep = /^[0-9]{8}$/;
+
+                        //Valida o formato do CEP.
+                        if (validacep.test(cep)) {
+
+                            //Preenche os campos com "..." enquanto consulta webservice.
+                            $("#rua").val("...");
+                            $("#bairro").val("...");
+                            $("#cidade").val("...");
+                            $("#uf").val("...");
+
+                            //Consulta o webservice viacep.com.br/
+                            $.getJSON("https://viacep.com.br/ws/" + cep + "/json/?callback=?", function(dados) {
+
+                                if (!("erro" in dados)) {
+                                    //Atualiza os campos com os valores da consulta.
+                                    $("#rua").val(dados.logradouro);
+                                    $("#bairro").val(dados.bairro);
+                                    $("#cidade").val(dados.localidade);
+                                    $("#uf").val(dados.uf);
+                                } //end if.
+                                else {
+                                    //CEP pesquisado não foi encontrado.
+                                    limpa_formulário_cep();
+                                    document.getElementById("valCep").innerHTML = "* CEP não encontrado";
+                                }
+                            });
+                        } //end if.
+                        else {
+                            //cep é inválido.
+                            limpa_formulário_cep();
+                            document.getElementById("valCep").innerHTML = "* Formato inválido";
+
+                        }
+                    } //end if.
+                    else {
+                        //cep sem valor, limpa formulário.
+                        limpa_formulário_cep();
+                    }
+                });
+            });
         </script>
         <script>
             function validaCpfCnpj() {
@@ -532,3 +598,4 @@ $btExcluir = FALSE;
 </body>
 
 </html>
+<?php ob_end_flush(); ?>
