@@ -14,6 +14,11 @@ class DaoPessoa {
         $conecta = $conn->conectadb();
         if ($conecta) {
             $nome = $pessoa->getNome();
+            $cpf = $pessoa->getCpf();
+            $dtNascimento = $pessoa->getDtNascimento();
+            $email = $pessoa->getEmail();
+            $senha = $pessoa->getSenha();
+            $perfil = $pessoa->getPerfil();
             $logradouro = $pessoa->getFkEndereco()->getLogradouro();
             $numero = $pessoa->getFkEndereco()->getNumero();
             $complemento = $pessoa->getFkEndereco()->getComplemento();
@@ -21,13 +26,9 @@ class DaoPessoa {
             $cidade = $pessoa->getFkEndereco()->getCidade();
             $uf = $pessoa->getFkEndereco()->getUf();
             $cep = $pessoa->getFkEndereco()->getCep();
-            $cpf = $pessoa->getCpf();
-            $dtNascimento = $pessoa->getDtNascimento();
-            $email = $pessoa->getEmail();
-            $senha = $pessoa->getSenha();
-            $perfil = $pessoa->getPerfil();
 
-            //$msg->setMsg("$logradouro, $complemento, $cep");
+
+            $msg->setMsg("$logradouro, $complemento, $cep, $nome, $cpf, $dtNascimento, $email, $senha, $perfil, $numero, $bairro, $cidade, $uf");
             try {
                 $conecta->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 //processo para pegar o idendereco da tabela endereco, conforme 
@@ -218,7 +219,6 @@ class DaoPessoa {
                         while ($linha = $rs->fetch(PDO::FETCH_OBJ)) {
                             $endereco = new Endereco();
                             $endereco->setLogradouro($linha->logradouro);
-                            $endereco>setNumero($linha->numero);
                             $endereco->setComplemento($linha->complemento);
                             $endereco->setBairro($linha->bairro);
                             $endereco->setCidade($linha->cidade);
@@ -237,10 +237,10 @@ class DaoPessoa {
                             $lista[$a] = $pessoa;
                             $a++;
                         }
-                    }
+                   }
                 }
             } catch (PDOException $ex) {
-                $msg->setMsg(var_dump($ex->errorInfo));
+                //$msg->setMsg(var_dump($ex->errorInfo));
             }
             $conn = null;
             return $lista;
@@ -290,13 +290,14 @@ class DaoPessoa {
                         while ($linha = $rs->fetch(PDO::FETCH_OBJ)) {
 
                             $endereco = new Endereco();
+                            $endereco->setCep($linha->cep);
                             $endereco->setLogradouro($linha->logradouro);
                             $endereco->setNumero($linha->numero);
                             $endereco->setComplemento($linha->complemento);
                             $endereco->setBairro($linha->bairro);
                             $endereco->setCidade($linha->cidade);
                             $endereco->setUf($linha->uf);
-                            $endereco->setCep($linha->cep);
+
 
                             $pessoa->setIdpessoa($linha->idpessoa);
                             $pessoa->setNome($linha->nome);
@@ -310,7 +311,7 @@ class DaoPessoa {
                     }
                 }
             } catch (PDOException $ex) {
-                $msg->setMsg(var_dump($ex->errorInfo));
+                //$msg->setMsg(var_dump($ex->errorInfo));
             }
             $conn = null;
         } else {

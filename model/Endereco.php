@@ -12,6 +12,7 @@
         private $uf;
         
 
+
         /**
          * Get the value of idEndereco
          */ 

@@ -91,7 +91,6 @@ $btExcluir = FALSE;
                             $senha = $_POST['senha'];
                             $perfil = $_POST['perfil'];
                             $cpf = $_POST['cpf'];
-                            $FkEndereco = $_POST['FkEndereco'];
                             $cep = $_POST['cep'];
                             $logradouro = $_POST['logradouro'];
                             $numero = $_POST['numero'];
@@ -109,7 +108,6 @@ $btExcluir = FALSE;
                                 $senha,
                                 $perfil,
                                 $cpf,
-                                $FkEndereco,
                                 $cep,
                                 $logradouro,
                                 $numero,
@@ -134,7 +132,6 @@ $btExcluir = FALSE;
                             $senha = $_POST['senha'];
                             $perfil = $_POST['perfil'];
                             $cpf = $_POST['cpf'];
-                            $FkEndereco = $_POST['FkEndereco'];
                             $cep = $_POST['cep'];
                             $logradouro = $_POST['logradouro'];
                             $numero = $_POST['numero'];
@@ -153,7 +150,6 @@ $btExcluir = FALSE;
                                 $senha,
                                 $perfil,
                                 $cpf,
-                                $FkEndereco,
                                 $cep,
                                 $logradouro,
                                 $numero,

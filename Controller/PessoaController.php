@@ -6,7 +6,7 @@ class PessoaController {
     
     public function inserirPessoa($cep, $logradouro, 
             $numero, $complemento, $bairro, $cidade, $uf,
-            $nome, $dtNascimento, $email, $senha, $perfil, $cpf, $FkEndereco){
+            $nome, $dtNascimento, $email, $senha, $perfil, $cpf){
         
         $endereco = new Endereco();
         $endereco->setCep($cep);
@@ -24,7 +24,8 @@ class PessoaController {
         $pessoa->setPerfil($perfil);
         $pessoa->setEmail($email);
         $pessoa->setCpf($cpf);
-        $pessoa->setFkEndereco($FkEndereco);
+        $pessoa->setFkEndereco($endereco);
+
         
         $daoPessoa = new DaoPessoa();
         return $daoPessoa->inserir($pessoa);
@@ -33,7 +34,7 @@ class PessoaController {
     //método para atualizar dados de produto no BD
     public function atualizarPessoa($idpessoa, $cep, $logradouro, 
     $numero, $complemento, $bairro, $cidade, $uf,
-    $nome, $dtNascimento, $email, $senha, $perfil, $cpf, $FkEndereco){
+    $nome, $dtNascimento, $email, $senha, $perfil, $cpf){
         $endereco = new Endereco();
         $endereco->setCep($cep);
         $endereco->setLogradouro($logradouro);
@@ -51,7 +52,7 @@ class PessoaController {
         $pessoa->setPerfil($perfil);
         $pessoa->setEmail($email);
         $pessoa->setCpf($cpf);
-        $pessoa->setFkEndereco($FkEndereco);
+  
 
         
         $daoPessoa = new DaoPessoa();
