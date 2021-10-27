@@ -32,7 +32,7 @@ class PessoaController {
     }
     
     //método para atualizar dados de produto no BD
-    public function atualizarPessoa($idpessoa, $cep, $logradouro, 
+    public function atualizarPessoa($idPessoa, $cep, $logradouro, 
     $numero, $complemento, $bairro, $cidade, $uf,
     $nome, $dtNascimento, $email, $senha, $perfil, $cpf){
         $endereco = new Endereco();
@@ -45,7 +45,7 @@ class PessoaController {
         $endereco->setUf($uf);
         
         $pessoa = new Pessoa();
-        $pessoa->setIdpessoa($idpessoa);
+        $pessoa->setIdpessoa($idPessoa);
         $pessoa->setNome($nome);
         $pessoa->setDtNascimento($dtNascimento);
         $pessoa->setSenha($senha);
@@ -60,7 +60,7 @@ class PessoaController {
     }
     
     //método para carregar a lista de produtos que vem da DAO
-    public function listarPessoaes(){
+    public function listarPessoas(){
         $daoPessoa = new DaoPessoa();
         return $daoPessoa->listarPessoasDAO();
     }

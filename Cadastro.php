@@ -25,17 +25,17 @@ $btExcluir = FALSE;
             margin-top: 20px;
         }
     </style>
-            <script>
-            function mascara(t, mask) {
-                var i = t.value.length;
-                var saida = mask.substring(1, 0);
-                var texto = mask.substring(i)
+    <script>
+        function mascara(t, mask) {
+            var i = t.value.length;
+            var saida = mask.substring(1, 0);
+            var texto = mask.substring(i)
 
-                if (texto.substring(0, 1) != saida) {
-                    t.value += texto.substring(0, 1);
-                }
+            if (texto.substring(0, 1) != saida) {
+                t.value += texto.substring(0, 1);
             }
-        </script>
+        }
+    </script>
 </head>
 
 <body>
@@ -102,19 +102,19 @@ $btExcluir = FALSE;
                             $fc = new PessoaController();
                             unset($_POST['cadastrarPessoa']);
                             $msg = $fc->inserirPessoa(
-                                $nome,
-                                $dtNascimento,
-                                $email,
-                                $senha,
-                                $perfil,
-                                $cpf,
                                 $cep,
                                 $logradouro,
                                 $numero,
                                 $complemento,
                                 $bairro,
                                 $cidade,
-                                $uf
+                                $uf,
+                                $nome,
+                                $dtNascimento,
+                                $email,
+                                $senha,
+                                $perfil,
+                                $cpf
                             );
                             echo $msg->getMsg();
                             echo "<META HTTP-EQUIV='REFRESH' CONTENT=\"2;
@@ -126,7 +126,7 @@ $btExcluir = FALSE;
                     if (isset($_POST['atualizarPessoa'])) {
                         $nome = trim($_POST['nome']);
                         if ($nome != "") {
-                            $idpessoa = $_POST['idPessoa'];
+                            $idPessoa = $_POST['idPessoa'];
                             $dtNascimento = $_POST['dtNascimento'];
                             $email = $_POST['email'];
                             $senha = $_POST['senha'];
@@ -140,10 +140,10 @@ $btExcluir = FALSE;
                             $cidade = $_POST['cidade'];
                             $uf = $_POST['uf'];
 
-                            $pe = new PessoaController();
+                            $fc = new PessoaController();
                             unset($_POST['atualizarPessoa']);
                             $msg = $fc->atualizarPessoa(
-                                $idpessoa,
+                                $idPessoa,
                                 $nome,
                                 $dtNascimento,
                                 $email,
@@ -181,7 +181,7 @@ $btExcluir = FALSE;
                         if ($pe != null) {
                             $id = $_POST['idpessoa'];
                             unset($_POST['excluirPessoa']);
-                            $pc = new PessoaController();
+                            $fc = new PessoaController();
                             $msg = $fc->excluirPessoa($id);
                             echo $msg->getMsg();
                             echo "<META HTTP-EQUIV='REFRESH' CONTENT=\"2;
@@ -200,7 +200,7 @@ $btExcluir = FALSE;
                         $btExcluir = TRUE;
                         $id = $_GET['id'];
                         $pc = new PessoaController();
-                        $pe = $fc->pesquisarPessoaId($id);
+                        $pe = $pc->pesquisarPessoaId($id);
                     }
                     ?>
 
@@ -238,7 +238,7 @@ $btExcluir = FALSE;
                             <input type="text" class="form-control" name="numero" id="numero" value="<?php echo $pe->getFkEndereco()->getNumero(); ?>">
                             <label>Complemento</label>
                             <input type="text" class="form-control" name="complemento" id="complemento" value="<?php echo $pe->getFkEndereco()->getComplemento(); ?>">
-                            
+
                             <label>Bairro</label>
                             <input type="text" class="form-control" name="bairro" id="bairro" value="<?php echo $pe->getFkEndereco()->getBairro(); ?>">
                             <label>Cidade</label>
@@ -324,7 +324,7 @@ $btExcluir = FALSE;
                             <tbody>
                                 <?php
                                 $fcTable = new PessoaController();
-                                $listaPessoas = $fcTable->listarPessoaes();
+                                $listaPessoas = $fcTable->listarPessoas();
                                 $a = 0;
                                 if ($listaPessoas != null) {
                                     foreach ($listaPessoas as $lf) {
@@ -342,10 +342,10 @@ $btExcluir = FALSE;
                                             <td><?php print_r($lf->getFkendereco()->getCidade()); ?></td>
                                             <td><?php print_r($lf->getFkendereco()->getUf()); ?></td>
                                             <td><a href="cadastro.php?id=<?php echo $lf->getIdpessoa(); ?>" class="btn btn-light">
-                                                    <img src="img/edita.png" width="24"></a>
+                                                    Editar</a>
                                                 </form>
                                                 <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#exampleModal<?php echo $a; ?>">
-                                                    <img src="img/delete.png" width="24"></button>
+                                                    Excluir</button>
                                             </td>
                                         </tr>
                                         <!-- Modal -->

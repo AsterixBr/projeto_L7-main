@@ -33,7 +33,7 @@ class DaoPessoa {
                 $conecta->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 //processo para pegar o idendereco da tabela endereco, conforme 
                 //o cep, o logradouro e o complemento informado.
-                $st = $conecta->prepare("select idendereco "
+                $st = $conecta->prepare("select idEndereco "
                     . "from endereco where cep = ? and "
                     . "logradouro = ? and complemento = ? limit 1");
                 $st->bindParam(1, $cep);
@@ -43,7 +43,7 @@ class DaoPessoa {
                     if ($st->rowCount() > 0) {
                         //$msg->setMsg("".$st->rowCount());
                         while ($linha = $st->fetch(PDO::FETCH_OBJ)) {
-                            $fkEndereco = $linha->idendereco;
+                            $fkEndereco = $linha->idEndereco;
                         }
                         //$msg->setMsg("$fkEnd");
                     } else {
@@ -58,7 +58,7 @@ class DaoPessoa {
                         $st2->bindParam(7, $uf);
                         $st2->execute();
 
-                        $st3 = $conecta->prepare("select idendereco "
+                        $st3 = $conecta->prepare("select idEndereco "
                             . "from endereco where cep = ? and "
                             . "logradouro = ? and complemento = ? limit 1");
                         $st3->bindParam(1, $cep);
@@ -68,7 +68,7 @@ class DaoPessoa {
                             if ($st3->rowCount() > 0) {
                                 //$msg->setMsg("".$st3->rowCount());
                                 while ($linha = $st3->fetch(PDO::FETCH_OBJ)) {
-                                    $fkEndereco = $linha->idendereco;
+                                    $fkEndereco = $linha->idEndereco;
                                 }
                                 //$msg->setMsg("$fkEnd");
                             }
@@ -128,7 +128,7 @@ class DaoPessoa {
                 $conecta->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 //processo para pegar o idendereco da tabela endereco, conforme 
                 //o cep, o logradouro e o complemento informado.
-                $st = $conecta->prepare("select idendereco "
+                $st = $conecta->prepare("select idEndereco "
                     . "from endereco where cep = ? and "
                     . "logradouro = ? and complemento = ? limit 1");
                 $st->bindParam(1, $cep);
@@ -139,7 +139,7 @@ class DaoPessoa {
                     if ($st->rowCount() > 0) {
                         //$msg->setMsg("".$st->rowCount());
                         while ($linha = $st->fetch(PDO::FETCH_OBJ)) {
-                            $fkEndereco = $linha->idendereco;
+                            $fkEndereco = $linha->idEndereco;
                         }
                         //$msg->setMsg("$fkEnd");
                     } else {
@@ -154,7 +154,7 @@ class DaoPessoa {
                             $st2->bindParam(7, $uf);
                             $st2->execute();
 
-                        $st3 = $conecta->prepare("select idendereco "
+                        $st3 = $conecta->prepare("select idEndereco "
                             . "from endereco where cep = ? and "
                             . "logradouro = ? and complemento = ? limit 1");
                         $st3->bindParam(1, $cep);
@@ -163,7 +163,7 @@ class DaoPessoa {
                         if ($st3->execute()) {
                             if ($st3->rowCount() > 0) {
                                 $linha = $st3->fetch(PDO::FETCH_OBJ);
-                                $fkEndereco = $linha->idendereco;
+                                $fkEndereco = $linha->idEndereco;
                             }
                         }
                     }
@@ -176,7 +176,7 @@ class DaoPessoa {
                     . "perfil = ?, "
                     . "cpf = ?, "
                     . "fkendereco = ? "
-                    . "where idpessoa = ?");
+                    . "where idPessoa = ?");
                 $stmt->bindParam(1, $nome);
                 $stmt->bindParam(2, $dtNascimento);
                 $stmt->bindParam(3, $email);
@@ -225,7 +225,7 @@ class DaoPessoa {
                           
 
                             $pessoa = new Pessoa();
-                            $pessoa->setIdpessoa($linha->idpessoa);
+                            $pessoa->setIdpessoa($linha->idPessoa);
                             $pessoa->setNome($linha->nome);
                             $pessoa->setDtNascimento($linha->dtNascimento);
                             $pessoa->setEmail($linha->email);
@@ -256,7 +256,7 @@ class DaoPessoa {
             try {
                 $conecta->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 $stmt = $conecta->prepare("delete from pessoa "
-                    . "where idpessoa = ?");
+                    . "where idPessoa = ?");
                 $stmt->bindParam(1, $id);
                 $stmt->execute();
                 $msg->setMsg("<p style='color: #d6bc71;'>"
@@ -281,8 +281,8 @@ class DaoPessoa {
             try {
                 $conecta->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 $rs = $conecta->prepare("select * from pessoa inner join endereco "
-                    . " on pessoa.fkendereco = endereco.idendereco where "
-                    . "idpessoa = ? limit 1");
+                    . " on pessoa.fkendereco = endereco.idEndereco where "
+                    . "idPessoa = ? limit 1");
                 $rs->bindParam(1, $id);
                 if ($rs->execute()) {
                     if ($rs->rowCount() > 0) {
@@ -298,7 +298,7 @@ class DaoPessoa {
                             $endereco->setUf($linha->uf);
 
 
-                            $pessoa->setIdpessoa($linha->idpessoa);
+                            $pessoa->setIdpessoa($linha->idPessoa);
                             $pessoa->setNome($linha->nome);
                             $pessoa->setDtNascimento($linha->dtNascimento);
                             $pessoa->setEmail($linha->email);
