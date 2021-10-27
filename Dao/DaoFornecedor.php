@@ -210,7 +210,7 @@ class DaoFornecedor {
         }else{
             echo "<script>alert('Banco inoperante!')</script>";
             echo "<META HTTP-EQUIV='REFRESH' CONTENT=\"0;
-			 URL='../PHPMatutinoPDO/cadastroFornecedor.php'\">"; 
+			 URL='../projetol7/cadastroFornecedor.php'\">"; 
         }
         return $fornecedor;
     }

@@ -124,9 +124,9 @@ $btExcluir = FALSE;
 
                     //método para atualizar dados do produto no BD
                     if (isset($_POST['atualizarPessoa'])) {
-                        $nome = trim($_POST['nome']);
-                        if ($nome != "") {
-                            $idPessoa = $_POST['idPessoa'];
+                        $idPessoa = trim($_POST['idPessoa']);
+                        if ($idPessoa != "") {
+                            $nome = $_POST['nome'];
                             $dtNascimento = $_POST['dtNascimento'];
                             $email = $_POST['email'];
                             $senha = $_POST['senha'];
@@ -143,20 +143,9 @@ $btExcluir = FALSE;
                             $fc = new PessoaController();
                             unset($_POST['atualizarPessoa']);
                             $msg = $fc->atualizarPessoa(
-                                $idPessoa,
-                                $nome,
-                                $dtNascimento,
-                                $email,
-                                $senha,
-                                $perfil,
-                                $cpf,
-                                $cep,
-                                $logradouro,
-                                $numero,
-                                $complemento,
-                                $bairro,
-                                $cidade,
-                                $uf
+                                $idPessoa, $cep, $logradouro, 
+                                $numero, $complemento, $bairro, $cidade, $uf,
+                                $nome, $dtNascimento, $email, $senha, $perfil, $cpf
                             );
                             echo $msg->getMsg();
                             /*echo "<META HTTP-EQUIV='REFRESH' CONTENT=\"2;
@@ -179,7 +168,7 @@ $btExcluir = FALSE;
 
                     if (isset($_POST['excluirPessoa'])) {
                         if ($pe != null) {
-                            $id = $_POST['idpessoa'];
+                            $id = $_POST['idPessoa'];
                             unset($_POST['excluirPessoa']);
                             $fc = new PessoaController();
                             $msg = $fc->excluirPessoa($id);
@@ -213,7 +202,7 @@ $btExcluir = FALSE;
                                             echo $pe->getIdpessoa();
                                         ?>
                                     </label></strong>
-                                <input type="hidden" name="idpessoa" value="<?php echo $pe->getIdpessoa(); ?>"><br>
+                                <input type="hidden" name="idPessoa" value="<?php echo $pe->getIdpessoa(); ?>"><br>
                             <?php
                                         }
                             ?>
@@ -223,7 +212,7 @@ $btExcluir = FALSE;
                             <input class="form-control" type="date" name="dtNascimento" value="<?php echo $pe->getdtNascimento(); ?>">
                             <label>CPF</label>
                             <label id="valCpf" style="color: red; font-size: 11px;"></label>
-                            <input class="form-control" type="text" id="cpf" onkeypress="mascara(this, '###.###.###-##')" maxlength="14" onblur="return validaCpfCnpj();" name="cpf" required="required">
+                            <input class="form-control" type="text" id="cpf" onkeypress="mascara(this, '###.###.###-##')" maxlength="14" onblur="return validaCpfCnpj();" name="cpf">
                             <label>E-Mail</label>
                             <input class="form-control" type="email" name="email" value="<?php echo $pe->getEmail(); ?>">
                             <label>Senha</label>
@@ -343,7 +332,6 @@ $btExcluir = FALSE;
                                             <td><?php print_r($lf->getFkendereco()->getUf()); ?></td>
                                             <td><a href="cadastro.php?id=<?php echo $lf->getIdpessoa(); ?>" class="btn btn-light">
                                                     Editar</a>
-                                                </form>
                                                 <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#exampleModal<?php echo $a; ?>">
                                                     Excluir</button>
                                             </td>

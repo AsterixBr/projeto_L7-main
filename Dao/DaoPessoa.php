@@ -111,6 +111,11 @@ class DaoPessoa {
         if ($conecta) {
             $idpessoa = $pessoa->getIdpessoa();
             $nome = $pessoa->getNome();
+            $cpf = $pessoa->getCpf();
+            $dtNascimento = $pessoa->getDtNascimento();
+            $email = $pessoa->getEmail();
+            $senha = $pessoa->getSenha();
+            $perfil = $pessoa->getPerfil();
             $logradouro = $pessoa->getFkEndereco()->getLogradouro();
             $numero = $pessoa->getFkEndereco()->getNumero();
             $complemento = $pessoa->getFkEndereco()->getComplemento();
@@ -118,12 +123,7 @@ class DaoPessoa {
             $cidade = $pessoa->getFkEndereco()->getCidade();
             $uf = $pessoa->getFkEndereco()->getUf();
             $cep = $pessoa->getFkEndereco()->getCep();
-            $cpf = $pessoa->getCpf();
-            $dtNascimento = $pessoa->getDtNascimento();
-            $email = $pessoa->getEmail();
-            $senha = $pessoa->getSenha();
-            $perfil = $pessoa->getPerfil();
-           // $msg->setMsg($cep);
+            //$msg->setMsg($cep);
             try {
                 $conecta->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
                 //processo para pegar o idendereco da tabela endereco, conforme 
@@ -304,7 +304,6 @@ class DaoPessoa {
                             $pessoa->setEmail($linha->email);
                             $pessoa->setSenha($linha->senha);
                             $pessoa->setPerfil($linha->perfil);
-                       
                             $pessoa->setCpf($linha->cpf);
                             $pessoa->setFkendereco($endereco);
                         }
@@ -317,7 +316,7 @@ class DaoPessoa {
         } else {
             echo "<script>alert('Banco inoperante!')</script>";
             echo "<META HTTP-EQUIV='REFRESH' CONTENT=\"0;
-			 URL='../PHPMatutino01/cadastroPessoa.php'\">";
+			 URL='../projetol7/cadastro.php'\">";
         }
         return $pessoa;
     }

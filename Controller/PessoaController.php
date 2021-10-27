@@ -52,6 +52,7 @@ class PessoaController {
         $pessoa->setPerfil($perfil);
         $pessoa->setEmail($email);
         $pessoa->setCpf($cpf);
+        $pessoa->setFkEndereco($endereco);
   
 
         
